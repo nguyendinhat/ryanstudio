@@ -1,0 +1,26 @@
+canvas {
+/*  display: block;
+  vertical-align: bottom;*/
+}
+
+/* ---- particles.js container ---- */
+
+#particles-js {
+  position: relative;
+  /*width: 100%;*/
+  /*height: 100%;*/
+
+  background: #fff url(../../../img/gs1.jpg) no-repeat;
+  background-size: cover;
+}
+
+
+
+
+.js-count-particles{
+  font-size: 1.1em;
+}
+
+.count-particles{
+  border-radius: 0 0 3px 3px;
+}

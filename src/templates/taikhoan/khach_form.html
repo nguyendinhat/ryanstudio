@@ -1,0 +1,21 @@
+<div class="fw-section bg-gray" style="padding: 10px 0 100px">
+    <div class="featured-image" style="background-image: url('/static/img/pager/03.jpg'); height: 20em"></div>
+    <div id="form-login" class="col-md-4 offset-md-4 pt-5 animated fadeInDown">
+        <h1 class="text-center">Login</h1>
+        <form method='POST' action='{% if action_url1 %}{{ action_url1 }}{% endif %}'> {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next_url1 }}">
+            {{ form1 }}
+            <button type='submit' class='btn btn-primary btn-block waves-effect waves-light space-top-none'>Đăng nhập</button>
+        </form>
+        <button id="btn-guest" class='btn btn-default btn-ghost btn-block waves-effect waves-dark space-top-none space-bottom'>Tiếp tục với tư cách khách</button>
+    </div>
+    <div id="form-guest" class="col-md-4 offset-md-4 pt-5 animated fadeInUp">
+        <h1 class="text-center">Email Khách</h1>
+        <form method='POST' action='{% if action_url2 %}{{ action_url2 }}{% endif %}'> {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next_url2 }}">
+            {{ form2 }}            
+            <button type='submit' class='btn btn-default btn-ghost btn-block waves-effect waves-dark space-top-none space-bottom'>Tiếp tục với tư cách khách</button>
+        </form>
+        <button id="btn-login" class='btn btn-primary btn-block waves-effect waves-light space-top-none'>Đăng nhập</button>
+    </div>
+</div>

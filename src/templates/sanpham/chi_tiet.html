@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load static %}
+{% block base_head %}
+    <link href="{% static 'css/themes/home.css' %}" rel="stylesheet">
+    <link href="{% static 'css/plugins/particles/particles.app.css' %}" rel="stylesheet">
+{% endblock base_head %}
+
+{% block content %}
+<section class="wrapper-content fw-section bg-gray padding-top-2x">
+    <div class="col-lg-12">    
+            <div class="ibox product-detail">
+                <div class="ibox-content">
+    
+                    <div class="row mb-5">
+                        <div class="col-md-5">
+                            <div class="product-image">
+                                <img src="{{ object.hinhanh.url }}" alt="">
+                            </div>                            
+                        </div>
+                        <div class="col-md-7">    
+                            <h1 class="font-bold my-3">
+                                {{ object.ten }}
+                            </h1>
+                            <hr>
+                            <div>
+                                {% if object.soluong > 0 %}
+                                <form class="form-sanpham-ajax" method="POST" action="{% url 'giohang:update' %}" data-endpoint="{% url 'giohang:update' %}" {% if request.user.is_authenticated %}data-user='abc'{% endif %}>
+                                    {% csrf_token %}
+                                    <input type="hidden" name="id_sanpham" value="{{ object.id_sanpham }}">
+                                    <div class="shop-product-tools">   
+                                        {% if sanpham in giohang.sanpham.all %}             
+                                        <button type="submit" class="btn btn-sm btn-warning btn-m-0 float-right waves-effect waves-light scale-up">Xóa khỏi giỏ hàng </button>
+                                        {% else %}                                  
+                                        <button type="submit" class="btn btn-sm btn-primary btn-m-0 float-right waves-effect waves-light scale-up">Thêm vào giỏ hàng</button>
+                                        {% endif %}
+                                    </div>
+                                </form>
+                                {% else %}
+                                <div class="shop-product-tools">                                     
+                                    <button class="btn btn-sm btn-danger btn-m-0 float-right waves-effect waves-light scale-up" disabled>Đã hết hàng</button>
+                                </div>
+                                {% endif %}
+                                <h1 class="font-normal">{{ object.dongia }} ₫</h1>
+                            </div>
+                            <hr>
+                            <h3 class="mb-4">Mô tả sản phẩm</h3>    
+                            <div class="small text-muted">
+                                {{ object.mota|linebreaks }}
+                            </div>                            
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div role="tabpanel" class="tab-pane transition fade container small in" id="additional">
+                            <h2 class="mb-5">Thông tin chi tiết</h2>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <table class="table-no-border">
+                                        <tbody>
+                                            <tr>
+                                                <th>Trọng lượng</th><td>{{ object.trongluong }} kg</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Chiều dài</th><td>{{ object.chieudai }} cm</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Chiều rộng</th><td>{{ object.chieurong }} cm</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Chiều cao</th><td>{{ object.chieucao }} cm</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Chất liệu</th><td>40% wood, 37% cotton, 23% plastic</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-6">
+                                    <table class="table-no-border">
+                                        <tbody>
+                                            <tr>
+                                                <th>Màu sắc</th><td>chưa tùy biến</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Nhà thiết kế</th><td>Ivan Ryan</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Xuất xứ</th><td>Made in Viet Nam</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Thông tin khác</th><td>Repellendus ea laudantium pariatur eum</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ibox-footer">
+                    <span class="float-right">
+                        Cập nhật sau cùng <i class="material-icons access_time"></i> {{ object.update|timesince }}
+                    </span>
+                    Còn sản {{ object.soluong }} phẩm trong kho
+                </div>
+            </div>
+    
+        </div>
+        
+</section>
+
+{% endblock content %}
+
+{% block javascript %}
+    <script src="{% static 'js/themes/sanpham.async.js' %}"></script>
+{% endblock javascript %}

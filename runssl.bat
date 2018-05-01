@@ -1,0 +1,1 @@
+.\Scripts\activate && cd src && python manage.py runsslserver --certificate ssl/ryanstudio.com.cer --key ssl/ryanstudio.com.key

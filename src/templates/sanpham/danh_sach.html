@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% block base_head %}
+	<link href="{% static 'css/themes/home.css' %}" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/themes/sanpham.grid.css' %}">
+{% endblock base_head %}
+{% block content %}
+	{% include "sanpham/filters_bar.html" %}
+	<div class="p-x" style="padding: 0 3%;">
+		<div class="container-fluid padding-bottom-3x isotope-grid filter-grid mx-auto">
+			<div class="wall">
+				{% for obj in object_list %} 
+					{% include "sanpham/item.html" with instance=obj %}
+				{% endfor %}>
+			</div>			
+		</div>  
+	</div>    
+{% endblock content %}
+{% block javascript %}
+	<script src="{% static 'js/themes/sanpham.async.js' %}"></script>
+	<script src="{% static 'js/themes/sanpham.grid.js' %}"></script>
+	<script src="{% static 'js/vendor/isotope.pkgd.min.js' %}"></script>
+{% endblock javascript %}

@@ -1,0 +1,1 @@
+python manage.py dumpdata sanpham --format json --indent 4 > sanpham/data/sanpham.json

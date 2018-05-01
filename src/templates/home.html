@@ -1,0 +1,501 @@
+{% extends "base.html" %}
+{% load static %}
+{% block base_head %}
+    <link href="{% static 'css/themes/home.css' %}" rel="stylesheet">
+    <link href="{% static 'css/plugins/particles/particles.app.css' %}" rel="stylesheet">
+{% endblock base_head %}
+{% block content %}
+
+<!-- .hero-slider -->
+    <section class="hero-slider" data-loop="true" data-autoplay="true" data-interval="7000">
+        <div class="inner">
+          <div class="slide hero-1" style="background-image: url('/static/img/hero-slider/01.jpg');">
+            <div class="container">
+              <div class="absolute from-top" style="top: 13%;">
+                <span class="h1 hidden-xs">New SPA<br>Cosmetics</span>
+              </div>
+              <div class="absolute text-right from-bottom" style="bottom: 13%; right: 15px;">
+                <span class="h2"><span class="text-thin">Only</span><br><strong>$127.99</strong></span><br>
+                <a href="#" class="btn btn-primary btn-with-icon-right waves-effect waves-light space-top-none">
+                  View Offer
+                  <i class="material-icons arrow_forward"></i>
+                </a>
+              </div>
+            </div>
+          </div><!-- .slide -->
+          <div class="slide hero-2" style="background-image: url('/static/img/hero-slider/02.jpg');">
+            <div class="container text-center padding-top-3x">
+              <span class="h1 from-bottom">Stylish Chair</span><br>
+              <span class="h2 from-bottom"><span class="text-thin">Special offer: </span> <strong>-25%</strong></span><br>
+              <a href="#" class="btn btn-primary btn-with-icon-right waves-effect waves-light scale-up">
+                View Offer
+                <i class="material-icons arrow_forward"></i>
+              </a>
+            </div>
+          </div><!-- .slide -->
+          <div class="slide hero-3" style="background-image: url('/static/img/hero-slider/03.jpg');">
+            <div class="container padding-top-3x">
+              <span class="h1 space-top from-left">Dior Sunglasses</span><br>
+              <span class="h2 from-right"><span class="text-thin">Only <span class="hidden-xs">today</span></span> <strong>-30%</strong></span><br>
+              <a href="#" class="btn btn-primary btn-with-icon-right waves-effect waves-light scale-up">
+                View Offer
+                <i class="material-icons arrow_forward"></i>
+              </a>
+            </div>
+          </div><!-- .slide -->
+          
+        </div><!-- .inner -->
+    </section><!-- .hero-slider -->
+  
+    <div class="container-fluid padding-top-3x">
+        <!-- Featured Categories -->
+        <h3 class="text-center padding-top font-display">Categories</h3>
+        <div class="row padding-top padding-bottom-3x">
+            <div class="col-sm-3 col-xs-6">
+            <a href="#" class="category-link">
+                <img src="{% static 'img/categories/cat01.jpg' %}" alt="Category">
+                Clocks
+            </a><!-- .category-link -->
+            </div><!-- .col-sm-4 -->
+            <div class="col-sm-3 col-xs-6">
+            <a href="#" class="category-link">
+                <img src="{% static 'img/categories/cat02.jpg' %}" alt="Category">
+                Furniture
+            </a><!-- .category-link -->
+            </div><!-- .col-sm-4 -->
+            <div class="col-sm-3 col-xs-6">
+            <a href="#" class="category-link">
+                <img src="{% static 'img/categories/cat03.jpg' %}" alt="Category">
+                Lightning
+            </a><!-- .category-link -->
+            </div><!-- .col-sm-4 -->
+            <div class="col-sm-3 col-xs-6">
+            <a href="#" class="category-link">
+                <img src="{% static 'img/categories/cat04.jpg' %}" alt="Category">
+                Bags
+            </a><!-- .category-link -->
+            </div><!-- .col-sm-4 -->
+        </div><!-- .row -->
+        <div class="row padding-top">
+            <!-- Special Offer -->
+            <div class="col-lg-3 col-md-4">
+            <div class="info-box text-center">
+                <h2>Special Offer<br><span class="text-danger">-30%</span></h2>
+                <a href="#_+" class="inline">
+                <img src="{% static 'img/shop/special-offer.jpg' %}" alt="Special Offer">
+                </a>
+                <h3 class="lead text-normal space-bottom-half my-5"><a href="#_+" class="link-title">FLOS Outdoor Lightning</a></p>
+                <span class="lead text-normal text-gray text-crossed">$800.00</span>
+                <span class="h4 text-normal text-danger">$560.00</span>
+            </div><!-- .info-box -->
+            <div class="padding-bottom-2x visible-xs"></div>
+            </div><!-- .col-lg-3.col-md-4 -->
+
+            <!-- Products -->
+            <div class="col-lg-9 col-md-8">
+            <!-- Nav Tabs -->
+            <ul class="nav nav-tabs text-center">
+                <li class="active" id="tab-1"><a href="#newcomers" data-toggle="tab">New Arrivals</a></li>
+                <li id="tab-2"><a href="#toprated" data-toggle="tab">Top Rated</a></li>
+                <li id="tab-3"><a href="#onsale" data-toggle="tab">On Sale</a></li>
+            </ul><!-- .nav-tabs -->
+
+            <!-- Tab Panes -->
+            <div class="tab-content">
+
+                <!-- #newcomers -->
+                <div class="tab-pane transition fade scale in active" id="newcomers">
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="shop-item">
+                        <div class="shop-thumbnail">
+                        <span class="shop-label text-danger">Sale</span>
+                        <a href="#_+" class="item-link"></a>
+                        <img src="{% static 'img/shop/th01.jpg' %}" alt="Shop item">
+                        </div>
+                        <div class="shop-item-details">
+                        <p class="shop-item-title"><a href="#_+">Storage Box</a></p>
+                        <span class="shop-item-price"> 
+                            $38.00
+                        </span>
+                        </div>
+                    </div><!-- .shop-item -->
+                    </div><!-- .col-lg-3.col-sm-6 -->
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="shop-item">
+                        <div class="shop-thumbnail">
+                        <a href="#_+" class="item-link"></a>
+                        <img src="{% static 'img/shop/th02.jpg' %}" alt="Shop item">
+                        </div>
+                        <div class="shop-item-details">
+                        <p class="shop-item-title"><a href="#_+">Shoulder Bag</a></p>
+                        <span class="shop-item-price">
+                            $125.00
+                        </span>
+                        </div>
+                    </div><!-- .shop-item -->
+                    </div><!-- .col-lg-3.col-sm-6 -->
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="shop-item">
+                        <div class="shop-thumbnail">
+                        <a href="#_+" class="item-link"></a>
+                        <img src="{% static 'img/shop/th03.jpg' %}" alt="Shop item">
+                        </div>
+                        <div class="shop-item-details">
+                        <p class="shop-item-title"><a href="#_+">Glass Vase</a></p>
+                        <span class="shop-item-price">
+                            $62.50
+                        </span>
+                        </div>
+                    </div><!-- .shop-item -->
+                    </div><!-- .col-lg-3.col-sm-6 -->
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="shop-item">
+                        <div class="shop-thumbnail">
+                        <a href="#_+" class="item-link"></a>
+                        <img src="{% static 'img/shop/th04.jpg' %}" alt="Shop item">
+                        </div>
+                        <div class="shop-item-details">
+                        <p class="shop-item-title"><a href="#_+">Alarm Clock</a></p>
+                        <span class="shop-item-price">
+                            $178.00
+                        </span>
+                        </div>
+                    </div><!-- .shop-item -->
+                    </div><!-- .col-lg-3.col-sm-6 -->
+                </div><!-- .row -->
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="shop-item">
+                        <div class="shop-thumbnail">
+                        <a href="#_+" class="item-link"></a>
+                        <img src="{% static 'img/shop/th05.jpg' %}" alt="Shop item">
+                        </div>
+                        <div class="shop-item-details">
+                        <p class="shop-item-title"><a href="#_+">Wall Clock</a></p>
+                        <span class="shop-item-price">
+                            $69.00
+                        </span>
+                        </div>
+                    </div><!-- .shop-item -->
+                    </div><!-- .col-lg-3.col-sm-6 -->
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="shop-item">
+                        <div class="shop-thumbnail">
+                        <a href="#_+" class="item-link"></a>
+                        <img src="{% static 'img/shop/th06.jpg' %}" alt="Shop item">
+                        </div>
+                        <div class="shop-item-details">
+                        <p class="shop-item-title"><a href="#_+">LED Lighting</a></p>
+                        <span class="shop-item-price">
+                            $130.00
+                        </span>
+                        </div>
+                    </div><!-- .shop-item -->
+                    </div><!-- .col-lg-3.col-sm-6 -->
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="shop-item">
+                        <div class="shop-thumbnail">
+                        <span class="shop-label text-warning">Popular</span>
+                        <a href="#_+" class="item-link"></a>
+                        <img src="{% static 'img/shop/th07.jpg' %}" alt="Shop item">
+                        </div>
+                        <div class="shop-item-details">
+                        <p class="shop-item-title"><a href="#_+">Sunglasses</a></p>
+                        <span class="shop-item-price">
+                            $99.00
+                        </span>
+                        </div>
+                    </div><!-- .shop-item -->
+                    </div><!-- .col-lg-3.col-sm-6 -->
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="shop-item">
+                        <div class="shop-thumbnail">
+                        <a href="#_+" class="item-link"></a>
+                        <img src="{% static 'img/shop/th08.jpg' %}" alt="Shop item">
+                        </div>
+                        <div class="shop-item-details">
+                        <p class="shop-item-title"><a href="#_+">Hook Basket</a></p>
+                        <span class="shop-item-price">
+                            $112.35
+                        </span>
+                        </div>
+                    </div><!-- .shop-item -->
+                    </div><!-- .col-lg-3.col-sm-6 -->
+                </div><!-- .row -->
+                </div><!-- .tab-pane#newcomers -->
+
+                <!-- #toprated -->
+                <div class="tab-pane fade scale" id="toprated">
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="shop-item">
+                        <div class="shop-thumbnail">                    
+                        <a href="#_+" class="item-link"></a>
+                        <img src="{% static 'img/shop/th09.jpg' %}" alt="Shop item">
+                        </div>
+                        <div class="shop-item-details">
+                        <p class="shop-item-title"><a href="#_+">Leather Case</a></p>
+                        <span class="shop-item-price">
+                            $118.00
+                        </span>
+                        </div>
+                    </div><!-- .shop-item -->
+                    </div><!-- .col-lg-3.col-sm-6 -->
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="shop-item">
+                        <div class="shop-thumbnail">                    
+                        <a href="#_+" class="item-link"></a>
+                        <img src="{% static 'img/shop/th10.jpg' %}" alt="Shop item">
+                        </div>
+                        <div class="shop-item-details">
+                        <p class="shop-item-title"><a href="#_+">Concrete Lamp</a></p>
+                        <span class="shop-item-price">
+                            $85.90
+                        </span>
+                        </div>
+                    </div><!-- .shop-item -->
+                    </div><!-- .col-lg-3.col-sm-6 -->
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="shop-item">
+                        <div class="shop-thumbnail">                    
+                        </span>
+                        <a href="#_+" class="item-link"></a>
+                        <img src="{% static 'img/shop/th11.jpg' %}" alt="Shop item">
+                        </div>
+                        <div class="shop-item-details">
+                        <p class="shop-item-title"><a href="#_+">Stylish Chair</a></p>
+                        <span class="shop-item-price">
+                            $417.00
+                        </span>
+                        </div>
+                    </div><!-- .shop-item -->
+                    </div><!-- .col-lg-3.col-sm-6 -->
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="shop-item">
+                        <div class="shop-thumbnail">                    
+                        <a href="#_+" class="item-link"></a>
+                        <img src="{% static 'img/shop/th12.jpg' %}" alt="Shop item">
+                        </div>
+                        <div class="shop-item-details">
+                        <p class="shop-item-title"><a href="#_+">Desktop Light</a></p>
+                        <span class="shop-item-price">
+                            $245.00
+                        </span>
+                        </div>
+                    </div><!-- .shop-item -->
+                    </div><!-- .col-lg-3.col-sm-6 -->
+                </div><!-- .row -->
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="shop-item">
+                        <div class="shop-thumbnail">                    
+                        <a href="#_+" class="item-link"></a>
+                        <img src="{% static 'img/shop/th13.jpg' %}" alt="Shop item">
+                        </div>
+                        <div class="shop-item-details">
+                        <p class="shop-item-title"><a href="#_+">Storage Jar</a></p>
+                        <span class="shop-item-price">
+                            $19.80
+                        </span>
+                        </div>
+                    </div><!-- .shop-item -->
+                    </div><!-- .col-lg-3.col-sm-6 -->
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="shop-item">
+                        <div class="shop-thumbnail">                    
+                        <a href="#_+" class="item-link"></a>
+                        <img src="{% static 'img/shop/th14.jpg' %}" alt="Shop item">
+                        </div>
+                        <div class="shop-item-details">
+                        <p class="shop-item-title"><a href="#_+">Ceramic Watch</a></p>
+                        <span class="shop-item-price">
+                            $299.00
+                        </span>
+                        </div>
+                    </div><!-- .shop-item -->
+                    </div><!-- .col-lg-3.col-sm-6 -->
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="shop-item">
+                        <div class="shop-thumbnail">                    
+                        <a href="#_+" class="item-link"></a>
+                        <img src="{% static 'img/shop/th15.jpg' %}" alt="Shop item">
+                        </div>
+                        <div class="shop-item-details">
+                        <p class="shop-item-title"><a href="#_+">Tissue Holder</a></p>
+                        <span class="shop-item-price">
+                            $76.40
+                        </span>
+                        </div>
+                    </div><!-- .shop-item -->
+                    </div><!-- .col-lg-3.col-sm-6 -->
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="shop-item">
+                        <div class="shop-thumbnail">                   
+                        <a href="#_+" class="item-link"></a>
+                        <img src="{% static 'img/shop/th16.jpg' %}" alt="Shop item">
+                        </div>
+                        <div class="shop-item-details">
+                        <p class="shop-item-title"><a href="#_+">Pendant Lamp</a></p>
+                        <span class="shop-item-price">
+                            $27.00
+                        </span>
+                        </div>
+                    </div><!-- .shop-item -->
+                    </div><!-- .col-lg-3.col-sm-6 -->
+                </div><!-- .row -->
+                </div><!-- .tab-pane#toprated -->
+
+                <!-- #onsale -->
+                <div class="tab-pane fade scale" id="onsale">
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="shop-item">
+                        <div class="shop-thumbnail">
+                        <span class="shop-label text-danger">Sale</span>
+                        <a href="#" class="item-link"></a>
+                        <img src="{% static 'img/shop/th05.jpg' %}" alt="Shop item">
+                        </div>
+                        <div class="shop-item-details">
+                        <p class="shop-item-title"><a href="#">Wall Clock</a></p>
+                        <span class="shop-item-price">
+                            $48.00
+                        </span>
+                        </div>
+                    </div><!-- .shop-item -->
+                    </div><!-- .col-lg-3.col-sm-6 -->
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="shop-item">
+                        <div class="shop-thumbnail">
+                        <span class="shop-label text-danger">Sale</span>
+                        <a href="#" class="item-link"></a>
+                        <img src="{% static 'img/shop/th06.jpg' %}" alt="Shop item">
+                        </div>
+                        <div class="shop-item-details">
+                        <p class="shop-item-title"><a href="#">LED Lighting</a></p>
+                        <span class="shop-item-price">
+                            $130.00
+                        </span>
+                        </div>
+                    </div><!-- .shop-item -->
+                    </div><!-- .col-lg-3.col-sm-6 -->
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="shop-item">
+                        <div class="shop-thumbnail">
+                        <span class="shop-label text-danger">Sale</span>
+                        <a href="#" class="item-link"></a>
+                        <img src="{% static 'img/shop/th04.jpg' %}" alt="Shop item">
+                        </div>
+                        <div class="shop-item-details">
+                        <p class="shop-item-title"><a href="#">Alarm Clock</a></p>
+                        <span class="shop-item-price">
+                            $178.00
+                        </span>
+                        </div>
+                    </div><!-- .shop-item -->
+                    </div><!-- .col-lg-3.col-sm-6 -->
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="shop-item">
+                        <div class="shop-thumbnail">
+                        <span class="shop-label text-danger">Sale</span>
+                        <a href="#" class="item-link"></a>
+                        <img src="{% static 'img/shop/th08.jpg' %}" alt="Shop item">
+                        </div>
+                        <div class="shop-item-details">
+                        <p class="shop-item-title"><a href="#">Hook Basket</a></p>
+                        <span class="shop-item-price">
+                            $112.35
+                        </span>
+                        </div>
+                    </div><!-- .shop-item -->
+                    </div><!-- .col-lg-3.col-sm-6 -->
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="shop-item">
+                        <div class="shop-thumbnail">
+                        <span class="shop-label text-danger">Sale</span>
+                        <a href="#_+" class="item-link"></a>
+                        <img src="{% static 'img/shop/th01.jpg' %}" alt="Shop item">
+                        </div>
+                        <div class="shop-item-details">
+                        <p class="shop-item-title"><a href="#_+">Storage Box</a></p>
+                        <span class="shop-item-price"> 
+                            $38.00
+                        </span>
+                        </div>
+                    </div><!-- .shop-item -->
+                    </div><!-- .col-lg-3.col-sm-6 -->
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="shop-item">
+                        <div class="shop-thumbnail">
+                        <span class="shop-label text-danger">Sale</span>
+                        <a href="#_+" class="item-link"></a>
+                        <img src="{% static 'img/shop/th07.jpg' %}" alt="Shop item">
+                        </div>
+                        <div class="shop-item-details">
+                        <p class="shop-item-title"><a href="#_+">Sunglasses</a></p>
+                        <span class="shop-item-price">
+                            $99.00
+                        </span>
+                        </div>
+                    </div><!-- .shop-item -->
+                    </div><!-- .col-lg-3.col-sm-6 -->
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="shop-item">
+                        <div class="shop-thumbnail">
+                        <span class="shop-label text-danger">Sale</span>
+                        <a href="#_+" class="item-link"></a>
+                        <img src="{% static 'img/shop/th09.jpg' %}" alt="Shop item">
+                        </div>
+                        <div class="shop-item-details">
+                        <p class="shop-item-title"><a href="#_+">Leather Case</a></p>
+                        <span class="shop-item-price">
+                            $118.00
+                        </span>
+                        </div>
+                    </div><!-- .shop-item -->
+                    </div><!-- .col-lg-3.col-sm-6 -->
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="shop-item">
+                        <div class="shop-thumbnail">
+                        <span class="shop-label text-danger">Sale</span>
+                        <a href="#_+" class="item-link"></a>
+                        <img src="{% static 'img/shop/th02.jpg' %}" alt="Shop item">
+                        </div>
+                        <div class="shop-item-details">
+                        <p class="shop-item-title"><a href="#_+">Shoulder Bag</a></p>
+                        <span class="shop-item-price">
+                            $125.00
+                        </span>
+                        </div>
+                    </div><!-- .shop-item -->
+                    </div><!-- .col-lg-3.col-sm-6 -->
+                </div><!-- .row -->
+                </div><!-- .tab-pane#onsale -->
+            </div><!-- .tab-content -->
+            </div><!-- .col-lg-9.col-md-8 -->
+        </div><!-- .row -->
+    </div>
+    </div><!-- /.blog-main -->
+{% endblock content %}
+{% block javascript %}
+    <script>
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            var target = $(e.target).attr("href"); // activated tab
+            if (target=='#newcomers') {
+                $("#tab-1").addClass("active");
+                $("#tab-2").removeClass("active");
+                $("#tab-3").removeClass("active");
+            }
+            if (target=='#toprated') {
+                $("#tab-1").removeClass("active");
+                $("#tab-2").addClass("active");
+                $("#tab-3").removeClass("active");
+            }
+            if (target=='#onsale') {        
+                $("#tab-1").removeClass("active");
+                $("#tab-2").removeClass("active");
+                $("#tab-3").addClass("active");
+            }
+        });
+    </script>
+{% endblock javascript %}

@@ -1,0 +1,120 @@
+#msform {
+    margin: 30px auto 0;
+    text-align: center;
+    position: relative;
+}
+
+#msform fieldset:not(:first-of-type) {
+    display: none;
+}
+
+.fs-title {
+    font-size: 15px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+.fs-subtitle {
+    font-weight: normal;
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+#progressbar {
+    margin-bottom: 30px;
+    overflow: hidden;
+    counter-reset: step;
+}
+#progressbar li {
+    list-style-type: none;
+    text-transform: uppercase;
+    font-size: 11px;
+    width: 33.33%;
+    float: left;
+    position: relative;
+}
+#progressbar li:before {
+    content: counter(step);
+    counter-increment: step;
+    width: 25px;
+    line-height: 25px;
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    background: #d9d9d9;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+}
+
+#progressbar li:after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background: #d9d9d9;
+    position: absolute;
+    left: -50%;
+    top: 12px;
+    z-index: -1;
+}
+#progressbar li:first-child:after {
+
+    content: none; 
+}
+
+#progressbar li.active:before,  #progressbar li.active:after{
+    background: #18a689;
+    color: white;
+}
+ul, menu, dir {
+    display: block;
+    list-style-type: disc;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 0px;
+}
+.wizard-content {
+    text-align: left;
+    padding: 0 75px;
+}
+.payment-content {
+    text-align: left;
+    padding: 20px 132px 20px
+}
+@media (max-width: 768px) {
+    .wizard-content {
+        padding: 0;
+    }
+    .payment-content {
+        padding: 30px 132px;
+    }
+    .payment-content > ul > li {
+        font-size: 12px;
+    }
+    .payment-content > ul > li .icheckbox_flat-green,
+    .payment-content > ul > li .iradio_flat-green {
+        bottom: 2px;
+        right: 12px;
+    }
+}
+@media (max-width: 1200px) {
+    .payment-content > ul > li {
+        font-size: 12px;
+    }
+    .payment-content > ul > li .icheckbox_flat-green,
+    .payment-content > ul > li .iradio_flat-green {
+        bottom: 2px;
+        right: 12px;
+    }
+}
+.beforecheckout {
+    font-size: 12px;
+    position: relative;
+    padding: 20px 0 50px;
+}
+.beforecheckout .beforecheckout-l {
+    position: absolute;
+    text-align: left;
+    left: 170px;
+}

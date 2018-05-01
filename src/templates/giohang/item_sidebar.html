@@ -1,0 +1,11 @@
+<div class="thanhtoan-sidebar">
+    <a href="{{ sanpham.get_absolute_url }}"><img src="{{ sanpham.hinhanh.url }}" alt="{{ sanpham.ten }}"></a>
+    <a href="{{ sanpham.get_absolute_url }}"><h4>{{ sanpham.ten|linebreaks|truncatechars:40 }}</h4></a>
+    <h5 class="title-dg">Price:</h5> <h5 class="dongia">{{ sanpham.dongia }} ₫</h5>
+    {% for item in ghsp %}            
+        {% if item.sanpham == sanpham %}
+        <h5 class="title-sl">Quantity:</h5><h5 class="soluong">{{ item.soluong }}</h5>
+        <h5 class="title-tt">Total:</h5><h5 class="thanhtien">{{ item.thanhtien }} ₫</h5>
+        {% endif %}                    
+    {% endfor %}
+</div>

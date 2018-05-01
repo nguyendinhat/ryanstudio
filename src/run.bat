@@ -1,0 +1,1 @@
+loadpage & python manage.py runserver

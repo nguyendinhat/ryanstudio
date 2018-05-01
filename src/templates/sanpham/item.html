@@ -1,0 +1,22 @@
+<div class="shop-item article grid-item devices">
+    <div class="shop-thumbnail">
+        <a href="{{ obj.get_absolute_url }}" class="item-link"></a>
+        {% if instance.hinhanh %}
+        <img src="{{ instance.hinhanh.url }}" alt="{{ instance.ten }} image">   
+        {% endif %}
+        
+        {% if instance.soluong > 0 %}
+            {% include 'sanpham/btn_update_giohang.html' with sanpham=instance giohang=giohang %}
+        {% else %}
+        <div class="shop-item-tools">
+            <button class="btn-simple add-to-cart" disabled><i class="material-icons not_interested"></i></button> 
+        </div>
+        {% endif %}
+                  
+        
+    </div>
+    <div class="shop-item-details">
+        <h3 class="shop-item-title"><a href="{{ obj.get_absolute_url }}">{{  instance.ten|linebreaks|truncatechars:60 }}</a></h3>
+        <span class="shop-item-price" data-dongia="{{ instance.dongia }}">{{ instance.dongia }} ₫</span>                 
+    </div>        
+</div><!-- .shop-item -->

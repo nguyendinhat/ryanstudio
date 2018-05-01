@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="fw-section bg-gray" style="padding: 10px 0 100px">
+    <div class="featured-image" style="background-image: url('/static/img/pager/03.jpg'); height: 20em"></div>
+    <div class="col-md-4 offset-md-4 pt-5">
+        <h1 class="text-center">Login</h1>
+        <form method='POST'> {% csrf_token %}
+            {{ form }}
+            <button type='submit' class='btn btn-primary btn-block my-3'>Login</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

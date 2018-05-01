@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+{% block base_head %}
+	<link href="{% static 'css/themes/home.css' %}" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/themes/sanpham.grid.css' %}">
+{% endblock base_head %}
+{% with request.GET.q as query %}{% endwith %}
+{% block content %}
+{% if query %}
+    <h1 class="text-center padding-top font-display">Kết quả tìm kiếm: {{ query }}</h1>
+    {% include "sanpham/filters_bar.html" %}
+    <div class="container-fluid padding-bottom-3x wall isotope-grid filter-grid">
+        {% for obj in object_list %} 
+            {% include "sanpham/item.html" with instance=obj %}
+        {% endfor %}>
+    </div>
+{% else %}
+    <h1 class="text-center padding-top font-display">Không tìm thấy bất cứ điều gì</h1>
+    <div class="col-12 col-md-6 mx-auto py-5">
+        {% include "timkiem/search_form.html" %}
+    </div>
+{% endif %}
+
+{% endblock content %}
+{% block javascript %}
+	<script src="{% static 'js/themes/sanpham.grid.js' %}"></script>
+	<script src="{% static 'js/vendor/isotope.pkgd.min.js' %}"></script>
+{% endblock javascript %}

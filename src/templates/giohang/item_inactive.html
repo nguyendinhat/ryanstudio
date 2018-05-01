@@ -1,0 +1,22 @@
+{% load static %}
+<div class="item item-inactive">
+    <a href="{{ sanpham.get_absolute_url }}" class="item-thumb">
+        <img src="{{ sanpham.hinhanh.url }}" alt="Item">
+    </a>
+    <div class="item-details">
+        <h3 class="item-title"><a href="{{ sanpham.get_absolute_url }}">{{ sanpham.ten }}</a></h3>
+        <div class="row item-box-total">
+            <h4 class="item-price col-3">{{ sanpham.dongia }} ₫</h4>
+            <div class="count-input offset-xl-2 col-xl-2 offset-1 col-3">
+                {% for item in ghsp %}                
+                    {% if item.sanpham == sanpham %}
+                    <input type="hidden" class="item-giohang" data-giohang="{{ item.giohang }}" data-sanpham="{{ item.sanpham.id_sanpham }}">
+                    {% endif %}                    
+                {% endfor %}                
+            </div>
+        </div>
+    </div>      
+    <a href="#🛒" class="item-remove">
+      <i class="material-icons clear"></i>
+    </a>
+</div>

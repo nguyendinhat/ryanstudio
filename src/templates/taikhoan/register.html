@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col-md-4 offset-md-4">
+    <h1 class="text-center">Register</h1>
+    <form method='POST'> {% csrf_token %}
+        {{ form }}
+        <button type='submit' class='btn btn-warning btn-block my-3'>Register</button>
+    </form>
+</div>
+{% endblock %}

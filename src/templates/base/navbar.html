@@ -1,0 +1,81 @@
+{% load static %}
+{% url 'giohang:home' as giohang_url %}
+<header class="navbar navbar-sticky blog-header">
+    <!-- Site Logo -->
+    <a href="/" class="site-logo visible-desktop">
+        <span>[</span> RYAN <span class="text-gray">/</span>STUDIO<span> ]</span>
+    </a><!-- site-logo.visible-desktop -->
+    <a href="/" class="site-logo visible-mobile">
+        <span>[</span> R <span>]</span>
+    </a><!-- site-logo.visible-mobile -->
+
+    <!-- Main Navigation -->
+    <!-- Control the position of navigation via modifier classes: "text-left, text-center, text-right" -->
+    <nav class="main-navigation text-center">
+        <ul class="menu">
+            <li class="current-menu-item">
+                <a href="/">Home</a>                
+            </li>
+            <li>
+                <a href="/sanpham/">Shop</a>            
+            </li>
+            <li><a href="#">Blog</a></li>
+            <li>
+                <a href="#">Gallery</a>
+            </li>
+            <li>
+                <a href="#">Multilevel</a>            
+            </li>
+            <li class="menu-item-has-children">
+                <a href="#">Pages</a>
+                <ul class="sub-menu">
+                    <li><a href="/admin">Admin</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contacts</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </li>
+        </ul><!-- .menu -->
+    </nav><!-- .main-navigation -->
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <div class="inner">
+            <a href="#" class="mobile-menu-toggle"><i class="material-icons menu"></i></a>
+            {% if request.user.is_authenticated %}
+            <div class="account-btn main-navigation>">
+                <a href="#"><i class="material-icons person"></i></a>
+                
+                <div class="cart-dropdown account-thumb">
+                    <div class="cart-item text-center item-sm">
+                        <div class="column">
+                            <a href="">Tài khoản</a>
+                        </div>                        
+                    </div>
+                    <div class="cart-subtotal text-center item-sm">
+                        <div class="column">
+                            <a href="/logout">
+                                Đăng xuất
+                            </a>
+                        </div>                        
+                    </div>
+                </div>                
+            </div>
+            {% else %}
+            <a href="/login"><i class="material-icons person_outline"></i></a>
+            {% endif %}
+            <div class="cart-btn">
+                <a href="{{ giohang_url }}">
+                    <i id="giohang_count">
+                        <span class="material-icons shopping_basket"></span>
+                        {% if request.session.giohang_items_count > 0 %}
+                            <span class="count navbar-giohang-count">{{ request.session.giohang_items_count }}</span>
+                        {% else %}
+                            <span class="navbar-giohang-count"></span>
+                        {% endif %}
+                    </i>
+                </a>
+            </div><!-- .cart-btn -->
+        </div><!-- .inner -->
+    </div><!-- .toolbar -->
+</header>

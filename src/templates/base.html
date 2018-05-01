@@ -1,0 +1,32 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" type="image/png" href="http://pluspng.com/img-png/dribbble-png-dribbble-logo-vector-psd-download-dribbble-ball-icon-200.png"/>
+    <title>Ryan Decor</title>
+    {% include "base/css.html" %}
+    {% block base_head %}{% endblock base_head %}
+</head>
+<body class="page-preloading">
+    <!-- Page Pre-Loader -->
+    <div class="page-preloader">
+        <div class="preloader">
+            <img src="{% static 'img/preloader.gif' %}" alt="Preloader">
+        </div>
+    </div><!-- .page-preloader -->
+    {% csrf_token %}
+    <div class="page-wrapper">
+        {% include "base/navbar.html" %}
+        {% block content %}{% endblock content %}
+        {% include "base/footer.html" %}
+    </div>     
+    {% include "base/js.html" %}
+    {% block javascript %}     
+    {% endblock javascript %}
+
+</body>
+</html>

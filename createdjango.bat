@@ -1,0 +1,1 @@
+python -m virtualenv . && .\Scripts\activate && cd src && pip install -r requirements.txt && django-admin startproject ryanstudio . && python manage.py runserver

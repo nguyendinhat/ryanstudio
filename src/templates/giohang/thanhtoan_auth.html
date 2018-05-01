@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    {% url 'giohang:home' as giohang_url %}
+    {% url 'giohang:thanhtoan' as thanhtoan_url %}
+    {% url 'guest_register' as guest_register %}
+    {% url 'login' as login %}
+    {% include 'taikhoan/khach_form.html' with form1=login_form form2=khach_form next_url1=giohang_url next_url2=thanhtoan_url action_url1=login action_url2=guest_register%}
+{% endblock content %}
+{% block javascript %}
+    <script src="{% static 'js/themes/giohang.thanhtoan.auth.js' %}"></script>
+{% endblock javascript %}

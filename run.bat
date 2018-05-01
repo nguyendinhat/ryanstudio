@@ -1,0 +1,1 @@
+.\Scripts\activate & cd src & loadpage & python manage.py runserver
