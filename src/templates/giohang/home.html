@@ -55,11 +55,15 @@
         <!-- Sidebar -->
         <div class="col-md-3 offset-md-1 col-sm-4 padding-bottom-2x">
             <aside>
-            <h3 class="toolbar-title">Tổng cộng:</h3>
-            <h1 id="amount" class="amount" data-tongcong="{{ giohang.tong_cong }}"></h1>
+            <h3 class="toolbar-title">Tạm tính:</h3>
+            <h1 id="tamtinh" class="tamtinh" data-tamtinh="{{ giohang.tong_thanhtien }}"></h1>
             <p class="text-sm text-gray">* Lưu ý: Chưa bao gồm phí giao hàng.</p>
             <a href="{% url 'sanpham:danhsach-sanpham' %}" class="btn btn-default btn-ghost btn-icon-left waves-effect waves-dark btn-block"><i class="material-icons arrow_back"></i> Tiếp tục mua hàng</a>
-            <a href="{% url 'giohang:thanhtoan' %}" class="btn btn-primary btn-block waves-effect waves-light space-top-none">Thanh toán</a>
+            {% if giohang.check_hethang %}
+            <a href="{% url 'giohang:thanhtoan' %}" class="btn btn-danger btn-block waves-effect waves-light space-top-none disabled" role="button" aria-disabled="true" id="btn-thanhtoan">Thanh toán</a>
+            {% else %}
+            <a href="{% url 'giohang:thanhtoan' %}" class="btn btn-primary btn-block waves-effect waves-light space-top-none" id="btn-thanhtoan">Thanh toán</a>
+            {% endif %}            
             </aside>
         </div><!-- .col-md-3.col-sm-4 -->
         </div><!-- .row -->

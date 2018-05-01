@@ -88,7 +88,7 @@ class ThanhToanForm(forms.ModelForm):
             }
         )
     )
-    cvv = forms.CharField(
+    ccv = forms.CharField(
         label   ='',
         widget  = forms.TextInput(
             attrs = {
@@ -98,4 +98,4 @@ class ThanhToanForm(forms.ModelForm):
     )
     class Meta:
         model = GioHang
-        fields = ('so_the', 'hoten_the', 'exp_month', 'exp_year', 'cvv')
+        fields = ('so_the', 'hoten_the', 'exp_month', 'exp_year', 'ccv')

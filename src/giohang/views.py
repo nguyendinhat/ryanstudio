@@ -6,6 +6,7 @@ from django.http import JsonResponse, HttpResponse
 
 from .models import GioHang, GioHangSanPham
 from .forms import DiaChiForm
+from .shippingfee import get_shipping_fee
 
 from taikhoan.models import ThanhVien, Khach
 from taikhoan.forms import LoginForm, KhachForm
@@ -94,10 +95,29 @@ def giohang_capnhat(request):
     return redirect("giohang:home")
 
 def thanhtoan_view(request):
+    hoten           = request.POST.get('hoten', None)
+    sdt             = request.POST.get('sdt', None)
+    diachi          = request.POST.get('diachi', None)
+    tinh_thanh      = request.POST.get('tinhthanh', None)
+    quan_huyen      = request.POST.get('quanhuyen', None)
+    xa_phuong       = request.POST.get('xaphuong', None)
+    loai_thanhtoan  = request.POST.get('loai_thanhtoan', None)
+    so_the          = request.POST.get('so_the', None)
+    hoten_the       = request.POST.get('hoten_the', None)
+    ngayhethan      = request.POST.get('ngayhethan', None)
+    ccv             = request.POST.get('ccv', None)
+    ma_tinhthanh    = request.POST.get('ma_tinhthanh', None)
+    # ma_khuyenmai    = request.POST.get('ma_khuyenmai', None)
+    
     giohang_obj = GioHang.objects.new_or_get(request)
-    ghsp = GioHangSanPham.objects.get_spgh(giohang=giohang_obj) 
+    ghsp = GioHangSanPham.objects.get_spgh(giohang=giohang_obj)
+    tong_trongluong = 0
+    for spgh in ghsp:
+        sp = SanPham.objects.get_by_id(spgh.sanpham.id_sanpham)
+        tong_trongluong = tong_trongluong + (sp.trongluong*spgh.soluong)
+    # print(tong_trongluong)
     request.session['giohang_items_count'] = giohang_obj.sanpham.count() or 0
-    if giohang_obj.sanpham.count() == 0:
+    if giohang_obj.sanpham.count() == 0 or giohang_obj.check_hethang():
         return redirect("giohang:home")
     elif giohang_obj.email is None:
         return redirect("giohang:authentication")
@@ -107,18 +127,37 @@ def thanhtoan_view(request):
             if spgh.soluong > sp.soluong:
                 error: "limitover"
                 return JsonResponse(error, status=204)
-        if giohang_obj.check_done():            
-            for spgh in ghsp:
-                sp = SanPham.objects.get_by_id(spgh.sanpham.id_sanpham)
-                sp.soluong = sp.soluong - spgh.soluong
-                sp.save()
-            giohang_obj.refresh_status()
-            del request.session['id_giohang']
-            request.session['giohang_items_count'] = 0
-            return redirect('giohang:success')
+        if all(i is not None for i in [hoten,sdt,diachi, tinh_thanh, quan_huyen, xa_phuong, loai_thanhtoan, ma_tinhthanh]):
+            giohang_obj.full_name       = hoten
+            giohang_obj.sdt             = sdt
+            giohang_obj.diachi          = diachi
+            giohang_obj.tinh_thanh      = tinh_thanh
+            giohang_obj.quan_huyen      = quan_huyen
+            giohang_obj.xa_phuong        = xa_phuong
+            giohang_obj.loai_thanhtoan  = loai_thanhtoan
+            giohang_obj.phigiaohang     = get_shipping_fee(ma_tinhthanh,tong_trongluong)
+            
+            if loai_thanhtoan == "credit":
+                giohang_obj.so_the      = so_the
+                giohang_obj.hoten_the   = hoten_the
+                giohang_obj.ngayhethan  = ngayhethan
+                giohang_obj.ccv         = ccv
+            
+            if giohang_obj.check_done():  
+                giohang_obj.save()          
+                for spgh in ghsp:
+                    sp = SanPham.objects.get_by_id(spgh.sanpham.id_sanpham)
+                    sp.soluong = sp.soluong - spgh.soluong
+                    sp.save()
+                giohang_obj.refresh_status()
+                del request.session['id_giohang']
+                request.session['giohang_items_count'] = 0
+                return HttpResponse({"message": "success"},status=202)
+
     context = {
         "giohang": giohang_obj,
-        "ghsp": ghsp
+        "ghsp": ghsp,
+        "tong_trongluong": tong_trongluong
     }
     return render(request, "giohang/thanhtoan.html", context)
 

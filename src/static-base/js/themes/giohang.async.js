@@ -1,4 +1,7 @@
-$("#amount").text(formatMoney(parseInt($("#amount").attr("data-tongcong"))));
+$("#tamtinh").text(formatMoney(parseInt($("#tamtinh").attr("data-tamtinh"))));
+$("#shipping-fee").text(formatMoney(parseInt($("#shipping-fee").attr("data-phigiaohang"))));
+$("#giamgia").text(formatMoney(parseInt($("#giamgia").attr("data-giamgia"))));
+$("#tongcong").text(formatMoney(parseInt($("#tamtinh").attr("data-tamtinh")) + parseInt($("#shipping-fee").attr("data-phigiaohang")) - parseInt($("#giamgia").attr("data-giamgia"))));
 // Count Input (Quantity)
 //------------------------------------------------------------------------------
 $(".incr-btn").on("click", function(e) {
@@ -42,8 +45,8 @@ $(".incr-btn").on("click", function(e) {
     $total.text(formatMoney(thanhtien));
     $total.attr("data-thanhtien",thanhtien);
     $button.parent().find('.quantity').val(newVal);
-    $('#amount').attr("data-tongcong",tinhTongTien(get_item()));
-    $("#amount").text(formatMoney(parseInt($("#amount").attr("data-tongcong"))));
+    $('#tamtinh').attr("data-tamtinh",tinhTongTien(get_item()));
+    $("#tamtinh").text(formatMoney(parseInt($("#tamtinh").attr("data-tamtinh"))));
     if (oldValue!=newVal){
         var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
         var data = "csrfmiddlewaretoken="+csrftoken+"&id_sanpham="+sanpham+"&soluong="+newVal;
@@ -77,11 +80,15 @@ $(".item-remove").on("click", function(e) {
                 'margin-bottom':'-160px',
             }, 100, function() {                    
                 $(this).remove();
-                $('#amount').attr("data-tongcong",tinhTongTien(get_item()));
-                $("#amount").text(formatMoney(parseInt($("#amount").attr("data-tongcong"))));    
+                $('#tamtinh').attr("data-tamtinh",tinhTongTien(get_item()));
+                $("#tamtinh").text(formatMoney(parseInt($("#tamtinh").attr("data-tamtinh"))));    
             });
             if (!data.hethang) {
                 $(".het-hang").remove();
+                $("#btn-thanhtoan").addClass("btn-primary");
+                $("#btn-thanhtoan").removeClass("btn-danger");
+                $("#btn-thanhtoan").removeClass("disabled");
+                $("#btn-thanhtoan").attr("aria-disabled","false");                
             }
             if (data.giohangItemsCount>0){
                 $(".had-item").text(data.giohangItemsCount);
@@ -94,8 +101,8 @@ $(".item-remove").on("click", function(e) {
                 $(".navbar-giohang-count").removeClass("count");
                 positionFooter();
             }            
-            $('#amount').text(formatMoney(tinhTongTien(get_item())));
-            $('#amount').attr("data-tongcong",tinhTongTien(get_item()));
+            $('#tamtinh').text(formatMoney(tinhTongTien(get_item())));
+            $('#tamtinh').attr("data-tamtinh",tinhTongTien(get_item()));
             
         }
     });		

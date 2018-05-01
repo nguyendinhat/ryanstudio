@@ -6960,3 +6960,11 @@ img.mfp-img {
         right: 10px;
     }
 }
+
+.toolbar-title {
+    position: relative;
+}
+.toolbar-title .checkout-r {
+    position: absolute;
+    right: 0;
+}
