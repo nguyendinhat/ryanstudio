@@ -1,0 +1,132 @@
+.article:hover {
+    background-color: #EFEFEF;
+}
+
+.article {
+    left: 0;
+    display: block;
+    margin: 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+.article .shop-thumbnail > img {
+    display: block;
+    width: 100%;
+    margin: 0 0 20px 0;
+}
+
+.wall {
+    display: block;
+    position: relative;
+    left: -2%;
+}
+.wall-column {
+    display: block;
+    position: relative;
+    width: 16.666%;
+    float: left;
+    padding: 0;
+    box-sizing: border-box;
+}
+.wall-column:first-child {
+    padding-right: 10px;
+}
+.wall-column ~ .wall-column {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+.wall-column:last-of-type {
+    padding-right: 0;
+}
+@media (max-width: 1024px) {
+    .wall-column {
+        width: 20%;
+        padding: 0;
+    }
+    .wall {
+        display: block;
+        position: relative;
+        left: -3.1%;
+    }
+}
+@media (max-width: 800px) {
+    .wall-column {
+        width: 25%;
+        padding: 0;
+    }
+    .wall {
+        display: block;
+        position: relative;
+        left: -4%;
+    }
+}
+@media (max-width: 768px) {
+    .wall-column {
+        width: 33.33333%;
+        padding: 0;
+    }
+    .wall {
+        display: block;
+        position: relative;
+        left: -5%;
+    }
+}
+@media (max-width: 640px) {
+    .wall-column {
+        width: 113%;
+        padding: 0;
+    }
+    .wall {
+        display: block;
+        position: relative;
+        left: -12%;
+    }
+}
+@media (max-width: 480px) {
+    .wall-column {
+        width: 115%;
+        float: none;
+        padding: 0;
+    }
+    .wall {
+        display: block;
+        position: relative;
+        left: -15%;
+    }
+}
+@media (max-width: 414px) {
+    .wall-column {
+        width: 124%;
+        float: none;
+        padding: 0;
+    }
+    .wall {
+        display: block;
+        position: relative;
+        left: -21%;
+    }
+}
+@media (max-width: 375px) {
+    .wall-column {
+        width: 128%;
+        float: none;
+        padding: 0;
+    }
+    .wall {
+        display: block;
+        position: relative;
+        left: -24%;
+    }
+}
+@media (max-width: 320px) {
+    .wall-column {
+        width: 131%;
+        float: none;
+        padding: 0;
+    }
+    .wall {
+        display: block;
+        position: relative;
+        left: -28%;
+    }
+}

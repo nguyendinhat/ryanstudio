@@ -91,20 +91,20 @@ class GioHang(models.Model):
     sanpham                 = models.ManyToManyField(SanPham, through='GioHangSanPham')
     full_name               = models.CharField(max_length=50)    
     sdt_regex               = RegexValidator(regex=r'^\d{10,11}$', message="Số điện thoại không hợp lệ")
-    sdt                     = models.CharField(validators=[sdt_regex], max_length=11, blank=True)
+    sdt                     = models.CharField(validators=[sdt_regex], max_length=11)
     diachi                  = models.CharField(max_length=255)
     tinh_thanh              = models.CharField(max_length=50)
     quan_huyen              = models.CharField(max_length=50)
     xa_phuong               = models.CharField(max_length=50)
-    phigiaohang             = models.PositiveIntegerField(default=0)
+    phigiaohang             = models.PositiveIntegerField(default=0) 
     giamgia                 = models.PositiveIntegerField(default=0)
     tong_thanhtien          = models.PositiveIntegerField(default=0)
     tong_cong               = models.PositiveIntegerField(default=0)
     loai_thanhtoan          = models.CharField(max_length=6, choices=GH_PPTT_CHOICES, blank=True, null=True)
-    so_the                  = models.CharField(max_length=16, null=True, blank=True)
+    so_the                  = models.CharField(max_length=19, null=True, blank=True)
     hoten_the               = models.CharField(max_length=50, blank=True, null=True)
     ngayhethan              = models.CharField(max_length=9, blank=True, null=True)
-    cvv                     = models.CharField(max_length=3, blank=True, null=True)    
+    ccv                     = models.CharField(max_length=3, blank=True, null=True)    
     status                  = models.CharField(max_length=8, choices=GH_TRANGTHAI_CHOICES, default='created')
     active                  = models.BooleanField(default=True)
     timestamp               = models.DateTimeField(auto_now_add=True)
@@ -131,7 +131,7 @@ class GioHang(models.Model):
         items = GioHangSanPham.objects.get_spgh(giohang=self)
         for item in items:
             total += item.thanhtien
-        self.tong_thanhtien = total + self.phigiaohang - self.giamgia
+        self.tong_thanhtien = total
         self.save()
 
     def check_done(self):       
@@ -142,7 +142,7 @@ class GioHang(models.Model):
         if self.loai_thanhtoan == "cod":
             thanhtoan = True
         elif self.loai_thanhtoan == "credit":
-            if all(i is not None for i in [self.so_the, self.hoten_the, self.ngayhethan, self.cvv]):
+            if all(i is not None for i in [self.so_the, self.hoten_the, self.ngayhethan, self.ccv]):
                 thanhtoan = True        
         if diachi and thanhtoan and self.tong_thanhtien > 0:
             return True
