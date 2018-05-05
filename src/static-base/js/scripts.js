@@ -13,17 +13,17 @@ var footerHeight = 0, footerTop = 0, $footer = $("#footer");
 function positionFooter() {	
 	footerHeight = $footer.height();
 	footerTop = ($(window).scrollTop()+$(window).height()-footerHeight)+"px";	
-   if ( ($(document.body).height()+footerHeight) < $(window).height()) {
-	   $footer.css({
-			position: "absolute"
-	   }).animate({
-			top: footerTop
-	   }, 0)
-   } else {
-	   $footer.css({
-			position: "static"
-	   })
-   }
+	if ( ($(document.body).height()+footerHeight) < $(window).height()) {
+		$footer.css({
+				position: "absolute"
+		}).animate({
+				top: footerTop
+		}, 0);
+	} else {
+		$footer.css({
+				position: "static"
+		});
+	}
 }
 positionFooter();
 $(window).scroll(positionFooter).resize(positionFooter);
@@ -33,37 +33,37 @@ jQuery(document).ready(function($) {
 	'use strict';	// Check if Page Scrollbar is visible
 	//------------------------------------------------------------------------------
 	var hasScrollbar = function() {
-	  // The Modern solution
-	  if (typeof window.innerWidth === 'number') {
-	    return window.innerWidth > document.documentElement.clientWidth;
-		}
+	// The Modern solution
+	if (typeof window.innerWidth === 'number') {
+		return window.innerWidth > document.documentElement.clientWidth;
+	}
 
-	  // rootElem for quirksmode
-	  var rootElem = document.documentElement || document.body;
+		// rootElem for quirksmode
+	var rootElem = document.documentElement || document.body;
 
-	  // Check overflow style property on body for fauxscrollbars
-	  var overflowStyle;
+	// Check overflow style property on body for fauxscrollbars
+	var overflowStyle;
 
-	  if (typeof rootElem.currentStyle !== 'undefined') {
+	if (typeof rootElem.currentStyle !== 'undefined') {
 			overflowStyle = rootElem.currentStyle.overflow;
-		}
+	}
 
-	  overflowStyle = overflowStyle || window.getComputedStyle(rootElem, '').overflow;
+	overflowStyle = overflowStyle || window.getComputedStyle(rootElem, '').overflow;
 
-	    // Also need to check the Y axis overflow
-	  var overflowYStyle;
+		// Also need to check the Y axis overflow
+	var overflowYStyle;
 
-	  if (typeof rootElem.currentStyle !== 'undefined') {
+	if (typeof rootElem.currentStyle !== 'undefined') {
 			overflowYStyle = rootElem.currentStyle.overflowY;
-		}
+	}
 
-	  overflowYStyle = overflowYStyle || window.getComputedStyle(rootElem, '').overflowY;
+	overflowYStyle = overflowYStyle || window.getComputedStyle(rootElem, '').overflowY;
 
-	  var contentOverflows = rootElem.scrollHeight > rootElem.clientHeight;
-	  var overflowShown    = /^(visible|auto)$/.test(overflowStyle) || /^(visible|auto)$/.test(overflowYStyle);
-	  var alwaysShowScroll = overflowStyle === 'scroll' || overflowYStyle === 'scroll';
+	var contentOverflows = rootElem.scrollHeight > rootElem.clientHeight;
+	var overflowShown    = /^(visible|auto)$/.test(overflowStyle) || /^(visible|auto)$/.test(overflowYStyle);
+	var alwaysShowScroll = overflowStyle === 'scroll' || overflowYStyle === 'scroll';
 
-	  return (contentOverflows && overflowShown) || (alwaysShowScroll);
+		return (contentOverflows && overflowShown) || (alwaysShowScroll);
 	};
 	if (hasScrollbar()) {
 		$('body').addClass('hasScrollbar');
@@ -83,14 +83,14 @@ jQuery(document).ready(function($) {
 		$('a:not([href^="#"])').on('click', function(e) {
 	    if($(this).attr('class') !== 'video-popup-btn' && $(this).attr('class') !== 'gallery-item' && $(this).attr('class') !== 'ajax-post-link' && $(this).attr('class') !== 'read-more ajax-post-link') {
 				console.log($(this).attr('class'));
-	      e.preventDefault();
-	      var linkUrl = $(this).attr('href');
-	      $('.page-preloading').addClass('link-clicked');
-	      setTimeout(function(){
-	        window.open(linkUrl , '_self');
-	      }, 550);
-	    }
-	  });
+			e.preventDefault();
+			var linkUrl = $(this).attr('href');
+			$('.page-preloading').addClass('link-clicked');
+			setTimeout(function(){
+				window.open(linkUrl , '_self');
+			}, 550);
+			}
+		});
 	}
 
 
@@ -100,10 +100,10 @@ jQuery(document).ready(function($) {
 	if ($scrollTop.length > 0) {
 		$(window).on('scroll', function(){
 	    if ($(window).scrollTop() > 600) {
-	      $scrollTop.addClass('visible');
-	    } else {
-	      $scrollTop.removeClass('visible');
-	    }
+			$scrollTop.addClass('visible');
+		} else {
+			$scrollTop.removeClass('visible');
+		}
 		});
 		$scrollTop.on('click', function(e){
 			e.preventDefault();
@@ -163,7 +163,26 @@ jQuery(document).ready(function($) {
 		}
 	});
 
-
+	//  toogle nar
+	// ----------------------------------------------------------------------------
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		var target = $(e.target).attr("href"); // activated tab
+		if (target=='#newcomers'||target=='#profile') {
+			$("#tab-1").addClass("active");
+			$("#tab-2").removeClass("active");
+			$("#tab-3").removeClass("active");
+		}
+		if (target=='#toprated'||target=='#status-order') {
+			$("#tab-1").removeClass("active");
+			$("#tab-2").addClass("active");
+			$("#tab-3").removeClass("active");
+		}
+		if (target=='#onsale') {        
+			$("#tab-1").removeClass("active");
+			$("#tab-2").removeClass("active");
+			$("#tab-3").addClass("active");
+		}
+	});
 	// Isotope Grid / Filters (Gallery)
 	//------------------------------------------------------------------------------
 	$(window).on('load', function(){
@@ -171,23 +190,23 @@ jQuery(document).ready(function($) {
 		// Isotope Grid
 		var $grid = $('.isotope-grid');
 		if($grid.length > 0) {
-		  $grid.isotope({
+			$grid.isotope({
 				itemSelector: '.grid-item',
 			});
 			setTimeout( function () {
 				$grid.isotope( 'layout' );
-      		}, 1 );
+			}, 1 );
 		}
 
 		// Filtering
 		if($('.filter-grid').length > 0) {
-		  var $filterGrid = $('.filter-grid');
+			var $filterGrid = $('.filter-grid');
 			$('.nav-filters').on( 'click', 'a', function(e) {
 				e.preventDefault();
 				$('.nav-filters li').removeClass('active');
 				$(this).parent().addClass('active');
-			  	var $filterValue = $(this).attr('data-filter');
-			  	$filterGrid.isotope({ filter: $filterValue });
+				var $filterValue = $(this).attr('data-filter');
+				$filterGrid.isotope({ filter: $filterValue });
 			});
 		}
 	});
@@ -403,9 +422,9 @@ jQuery(document).ready(function($) {
 
 			var countDownTrigger = ( trigger ) ? trigger : countDown;
 			countDownTrigger.downCount({
-		      date: dateTime,
-		      offset: +10
-		  });
+			date: dateTime,
+			offset: +10
+			});
 		});
 	}
 	countDownFunc( $('.countdown') );
@@ -469,12 +488,12 @@ jQuery(document).ready(function($) {
 	var $videoBtn = $( '.video-popup-btn, .gallery-video, .video-popup-placeholder .play-btn' );
 	if( $videoBtn.length > 0 ) {
 		$videoBtn.magnificPopup( {
-		  type: 'iframe',
-		  mainClass: 'mfp-fade',
-		  removalDelay: 500,
-		  gallery: {
-		    enabled: true
-		  }
+			type: 'iframe',
+			mainClass: 'mfp-fade',
+			removalDelay: 500,
+			gallery: {
+				enabled: true
+			}
 		} );
 	}
 
@@ -484,12 +503,12 @@ jQuery(document).ready(function($) {
 	var $galleryItem = $( '.gallery-item' );
 	if( $galleryItem.length > 0 ) {
 		$galleryItem.magnificPopup( {
-		  type: 'image',
-		  mainClass: 'mfp-fade',
-		  removalDelay: 500,
-		  gallery: {
-		    enabled: true
-		  }
+			type: 'image',
+			mainClass: 'mfp-fade',
+			removalDelay: 500,
+			gallery: {
+				enabled: true
+			}
 		} );
 	}
 
@@ -519,11 +538,11 @@ jQuery(document).ready(function($) {
 		rangeSlider.noUiSlider.on('update', function(values, handle) {
 			var value = values[handle];
 			if ( handle ) {
-				valueMax.innerHTML  = Math.round(value);
-				valueMaxInput.value = Math.round(value);
+				valueMax.innerHTML  = formatMoney(Math.round(value));
+				valueMaxInput.value = formatMoney(Math.round(value));
 			} else {
-				valueMin.innerHTML  = Math.round(value);
-				valueMinInput.value = Math.round(value);
+				valueMin.innerHTML  = formatMoney(Math.round(value));
+				valueMinInput.value = formatMoney(Math.round(value));
 			}
 		});
 
@@ -593,23 +612,29 @@ jQuery(document).ready(function($) {
 $(document).ready(function () {
 	var searchForm = $(".search-form");
 	var searchInput = searchForm.find("[name='q']");
-	var typingTimer;
-	var typingInterval = 2000 ;
-	searchInput.keyup(function (event) {
-		clearTimeout(typingInterval);
-		typingTimer = setTimeout(peformSearch, typingInterval);
+	// var typingTimer;
+	// var typingInterval = 2000 ;
+	// searchInput.keyup(function (event) {
+	// 	// clearTimeout(typingInterval);
+	// 	typingTimer = setTimeout(peformSearch, typingInterval);
+	// });
+	// searchInput.keydown(function (event) {
+	// 	// clearTimeout(typingInterval);
+	// });
+	// searchInput.keypress(function (event) {
+	// 	// clearTimeout(typingInterval);
+	// });
+	searchInput.blur(function(){
+		peformSearch();
 	});
-	searchInput.keydown(function (event) {
-		clearTimeout(typingInterval);
+	searchForm.submit(function(){
+		peformSearch();
 	});
-	searchInput.keypress(function (event) {
-		clearTimeout(typingInterval);
-	});
-
 	function peformSearch() {
 		var query = searchInput.val();
-		setTimeout(function(){
-			window.location.href='/timkiem/?q=' + query;
-		}, 1000);
+		window.location.href='/timkiem/?q=' + query;
+		
 	}
 });
+
+

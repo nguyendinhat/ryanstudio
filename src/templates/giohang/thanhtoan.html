@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/themes/wizard.css' %}">
     <!-- card -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/themes/giohang.thanhtoan.card.css' %}"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'css/vendor/sweetalert.css' %}"> 
 {% endblock base_head %}
 {% block content %}
 <!-- Container -->
@@ -25,17 +26,17 @@
                         <div class="wizard-content">
                             <div class="wrap-input100 validate-input" data-validate="Chúng ta sẽ gọi nhau bằng gì ?">
                                 <span class="label-input100">Họ tên</span>
-                                <input type="text" name="hoten" class="input100" placeholder="Ex: Nguyễn Thanh Bình" required="" id="hoten">
+                                <input type="text" name="hoten" class="input100" required="" id="hoten">
                                 <span class="focus-input100 material-icons"></span>
                             </div>
                             <div class="wrap-input100 validate-input" data-validate="Giữ liên lạc với nhau để khi nhớ nhau ta còn gọi">
                                 <span class="label-input100">Số điện thoại</span>
-                                <input type="text" name="sdt" class="input100" placeholder="Ex: 01234567890" maxlength="11" onkeypress="return event.charCode >= 48 && event.charCode <= 57" required="" id="sdt">
+                                <input type="text" name="sdt" class="input100" maxlength="11" onkeypress="return event.charCode >= 48 && event.charCode <= 57" required="" id="sdt">
                                 <span class="focus-input100 material-icons"></span>
                             </div>
                             <div class="wrap-input100 validate-input" data-validate="Shipper sẽ không tìm thấy số nhà của bạn">
                                 <span class="label-input100">Địa chỉ</span>
-                                <input type="text" name="dichi" class="input100" placeholder="Ex: Hẻm 68 Bùi Thị Xuân" required="" id="diachi">
+                                <input type="text" name="dichi" class="input100" required="" id="diachi">
                                 <span class="focus-input100"></span>
                             </div>
                             <div class="wrap-input100 input100-select validate-input" data-validate="Thành phố buồn vì bạn đã quên nó">
@@ -58,7 +59,7 @@
                                 <span class="label-input100">
                                         Xã/Phường</span>
                                 <select class="selection-2" name="xaphuong" id="xaphuong">
-                                     <option rel="-1"></option>
+                                    <option rel="-1"></option>
                                 </select>
                                 <span class="focus-input100"></span>
                             </div>
@@ -132,6 +133,7 @@
                                     <p>Số điện thoại: <span class="pre-sdt beforecheckout-l"></span></p>
                                     <p>Phương thức thanh toán: <span class="pre-pttt beforecheckout-l"></span></p>
                                     <p>Địa chỉ: <span class="pre-diachi beforecheckout-l"></span></p>
+                                    <p>Tổng cộng: <span class="beforecheckout-l tongcong"></span></p>
                                     <div class="pre-pttt-chitiet"></div>
                                 </div>
                         </div>                                                
@@ -159,8 +161,6 @@
                     {% include "giohang/item_sidebar.html" with sanpham=spgh.sanpham ghsp=ghsp%}
                 {% endif %}
             {% endfor %}
-                       
-            
         </div><!-- .col-md-3.col-sm-4 -->
     </div><!-- .row -->
 </section><!-- .container --> 
@@ -168,6 +168,7 @@
 {% endblock content %}
 {% block javascript %}
     <script src="{% static 'js/vendor/select2.min.js' %}"></script>
+    <script src="{% static 'js/vendor/sweetalert.min.js' %}"></script>
     <script src="{% static 'js/themes/giohang.thanhtoan.phigiaohang.js' %}"></script>    
     <script src="{% static 'js/themes/giohang.thanhtoan.handle.js' %}"></script>
     <script src="{% static 'js/themes/giohang.thanhtoan.location.js' %}"></script>

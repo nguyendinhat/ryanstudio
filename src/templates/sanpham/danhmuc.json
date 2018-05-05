@@ -1,0 +1,79 @@
+{
+    "Bàn":{
+        "Bàn nước":"",
+        "Bàn ăn": "",
+        "Bàn trưng bày":"",
+        "Bàn làm việc":"",
+        "Bàn trang điểm":"",
+        "Bàn đầu giường": "",
+        "Bàn xếp": "",
+        "Bàn ngoài trời": ""
+    },
+    "Ghế":{
+        "Ghế sofa":"",
+        "Ghế bành": "",
+        "Ghê đôn":"",
+        "Ghế ăn":"",
+        "Ghế cafe":"",
+        "Ghế văn phòng":"",
+        "Ghế tre em": "",
+        "ghế xếp": "",
+        "Ghế ngoài trời":""
+    },
+    "tủ kệ": {
+        "Tủ tivi": "",
+        "Tủ trưng bày":"",
+        "Tủ ly":"",
+        "Tủ quần áo":"",
+        "Tủ phòng tắm":"",
+        "Kệ giày":"",
+        "Kệ sách":""
+    },
+    "Giường": {
+        "Giường đơn": "",
+        "Giường đôi": "",
+        "Giường trẻ em": ""
+    },
+    "đèn": {
+        "Đèn trần": "",
+        "Đèn tường": "",
+        "Đèn bàn": "",        
+        "Đèn sàn": "",
+        "Đèn ngoài trời": ""
+    },
+    "Nội thất mềm": {
+        "Chăn":"",
+        "Gối":"",
+        "Đệm":"",
+        
+        
+        
+    },
+    "Phụ kiện":{
+        "Trên tường":{
+            "Rèm cửa":"",
+            "tranh":"",
+            "khung ảnh treo tường":"",
+            "Gương":"",
+            "Đồng hồ treo tường":"",
+            "móc áo":""           
+        },
+        "Trên bàn": {
+            "khăn bàn":"",
+            "Chậu & lọ":"",
+            "Nến":"",
+            "Khung ảnh để bàn":"",
+            "Đồng hồ để bàn":""
+        },
+        "Trên giường": {
+            "Nệm":"",
+            "Chăn":"",
+            "gối":""
+        },
+        "Dưới sàn": {
+            "Thảm": "",
+            "Giỏ & Rương":""
+        },        
+        "Khác": ""
+    }
+}

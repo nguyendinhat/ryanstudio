@@ -1,12 +1,33 @@
 $("#tamtinh").text(formatMoney(parseInt($("#tamtinh").attr("data-tamtinh"))));
 $("#shipping-fee").text(formatMoney(parseInt($("#shipping-fee").attr("data-phigiaohang"))));
 $("#giamgia").text(formatMoney(parseInt($("#giamgia").attr("data-giamgia"))));
-$("#tongcong").text(formatMoney(parseInt($("#tamtinh").attr("data-tamtinh")) + parseInt($("#shipping-fee").attr("data-phigiaohang")) - parseInt($("#giamgia").attr("data-giamgia"))));
+$(".tongcong").text(formatMoney(parseInt($("#tamtinh").attr("data-tamtinh")) + parseInt($("#shipping-fee").attr("data-phigiaohang")) - parseInt($("#giamgia").attr("data-giamgia"))));
 // Count Input (Quantity)
 //------------------------------------------------------------------------------
+if (parseInt($(".quantity").val())>parseInt($(".item-giohang").attr("data-soluong-limit"))) {
+    console.log("vượt số lượng");
+}
+
+function enableBtnCheckout() {
+    $(".co-the-mua").remove();
+    $("#btn-thanhtoan").addClass("btn-primary");
+    $("#btn-thanhtoan").removeClass("btn-danger");
+    $("#btn-thanhtoan").removeClass("disabled");
+    $("#btn-thanhtoan").attr("aria-disabled","false");
+    $("#msg-thanhtoan").text("* Lưu ý: Chưa bao gồm phí giao hàng. Phí giao hàng sẽ được tính khi bạn thanh toán");
+}
+function disableBtnCheckout() {
+    $("#btn-thanhtoan").addClass("btn-danger");
+    $("#btn-thanhtoan").removeClass("btn-primary");
+    $("#btn-thanhtoan").addClass("disabled");
+    $("#btn-thanhtoan").attr("aria-disabled","true");
+    $("#msg-thanhtoan").text("* Lưu ý: Giỏ hàng của bạn có sản phẩm đã hết hàng hoặc không đủ số lượng. Hãy xóa chúng đi hoặc thay đôi số lượng để tiếp tục thanh toánn");
+}
+
 $(".incr-btn").on("click", function(e) {
     var $button     = $(this);
     var $item       = $button.parent().find('.item-giohang');
+    var $itembox    = $item.parent().parent().parent().parent();
     var $total      = $button.parent().parent().find('.item-total');
     
     var sanpham     = $item.attr("data-sanpham");
@@ -17,24 +38,29 @@ $(".incr-btn").on("click", function(e) {
     var newVal      = 1;
     $button.parent().find('.incr-btn[data-action="decrease"]').removeClass('inactive');
     if ($button.data('action') == "increase") {
-        if (limit ==0) {
+        if (limit == 0) {
             newVal = 0;
             $button.addClass('inactive');
         } else {
             newVal = parseInt(oldValue) + 1;
             if (newVal > limit) {
                 newVal = limit;
+                $itembox.removeClass("item-inactive");             
             }
         } 
         thanhtien = newVal * dongia;
     } else {
-        // Don't allow decrementing below 1
-        if (limit ==0) {
+        if (limit == 0) {
             newVal = 0;
             $button.addClass('inactive');
         } else {
             if (oldValue > 1) {
-                newVal = parseInt(oldValue) - 1;				
+                newVal = parseInt(oldValue) - 1;
+                if (newVal <= limit) {
+                    $itembox.removeClass("item-inactive");                 
+                } else {
+                    $itembox.addClass("item-inactive");
+                }				
             } else {
                 newVal = 1;
                 $button.addClass('inactive');
@@ -54,6 +80,14 @@ $(".incr-btn").on("click", function(e) {
             url: '/giohang/update/',
             method: 'POST',
             data: data,
+            success: function(data){ 
+                if (!data.khongdusoluong) {
+                    $(".khong-du-so-luong").remove();
+                    if (!data.hethang) {
+                        enableBtnCheckout();
+                    }
+                }
+            },
             error: function(error){
                 console.log(error);
             }        
@@ -83,13 +117,14 @@ $(".item-remove").on("click", function(e) {
                 $('#tamtinh').attr("data-tamtinh",tinhTongTien(get_item()));
                 $("#tamtinh").text(formatMoney(parseInt($("#tamtinh").attr("data-tamtinh"))));    
             });
+
             if (!data.hethang) {
                 $(".het-hang").remove();
-                $("#btn-thanhtoan").addClass("btn-primary");
-                $("#btn-thanhtoan").removeClass("btn-danger");
-                $("#btn-thanhtoan").removeClass("disabled");
-                $("#btn-thanhtoan").attr("aria-disabled","false");                
+                if (!data.khongdusoluong) {
+                    enableBtnCheckout();
+                }
             }
+
             if (data.giohangItemsCount>0){
                 $(".had-item").text(data.giohangItemsCount);
                 $(".navbar-giohang-count").text(data.giohangItemsCount);

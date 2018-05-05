@@ -24,13 +24,25 @@
             {% endfor %}
             <!-- .item -->
             </div>
-             {% if giohang.check_hethang %}
-                <p class="text-sm text-gray het-hang">Những sản phẩm bạn có thể mua</p>
+            {% if giohang.check_khongdusoluong %}
+                <p class="text-sm text-gray khong-du-so-luong">Những sản phẩm không đủ số lượng bạn đặt</p>
             {% endif %}
             <div class="shopping-cart">
             <!-- Item -->
             {% for spgh in ghsp %}
-                {% if spgh.active != False %}
+                {% if spgh.soluong > spgh.sanpham.soluong and spgh.active == True %}
+                    {% include "giohang/item_not_enough_quantity.html" with sanpham=spgh.sanpham ghsp=ghsp%}
+                {% endif %}
+            {% endfor %}
+            <!-- .item -->
+            </div>
+            {% if giohang.check_hethang == True or giohang.check_khongdusoluong == True %}
+                <p class="text-sm text-gray co-the-mua">Những sản phẩm bạn có thể mua</p>
+            {% endif %}
+            <div class="shopping-cart">
+            <!-- Item -->
+            {% for spgh in ghsp %}
+                {% if spgh.soluong <= spgh.sanpham.soluong and spgh.active == True %}
                     {% include "giohang/item.html" with sanpham=spgh.sanpham ghsp=ghsp%}
                 {% endif %}
             {% endfor %}
@@ -56,12 +68,15 @@
         <div class="col-md-3 offset-md-1 col-sm-4 padding-bottom-2x">
             <aside>
             <h3 class="toolbar-title">Tạm tính:</h3>
-            <h1 id="tamtinh" class="tamtinh" data-tamtinh="{{ giohang.tong_thanhtien }}"></h1>
-            <p class="text-sm text-gray">* Lưu ý: Chưa bao gồm phí giao hàng.</p>
-            <a href="{% url 'sanpham:danhsach-sanpham' %}" class="btn btn-default btn-ghost btn-icon-left waves-effect waves-dark btn-block"><i class="material-icons arrow_back"></i> Tiếp tục mua hàng</a>
-            {% if giohang.check_hethang %}
+            <h1 id="tamtinh" class="tamtinh" data-tamtinh="{{ giohang.tong_thanhtien }}"></h1>                 
+            
+            {% if giohang.check_hethang or giohang.check_khongdusoluong%}
+            <p id="msg-thanhtoan" class="text-sm text-gray">* Lưu ý: Giỏ hàng của bạn có sản phẩm đã hết hàng hoặc không đủ số lượng. Hãy xóa chúng đi hoặc thay đôi số lượng để tiếp tục thanh toán</p>
+            <a href="{% url 'sanpham:danhsach-sanpham' %}" class="btn btn-default btn-ghost btn-icon-left waves-effect waves-dark btn-block"><i class="material-icons arrow_back"></i> Tiếp tục mua hàng</a>      
             <a href="{% url 'giohang:thanhtoan' %}" class="btn btn-danger btn-block waves-effect waves-light space-top-none disabled" role="button" aria-disabled="true" id="btn-thanhtoan">Thanh toán</a>
             {% else %}
+            <p id="msg-thanhtoan" class="text-sm text-gray">* Lưu ý: Chưa bao gồm phí giao hàng. Phí giao hàng sẽ được tính khi bạn thanh toán</p>
+            <a href="{% url 'sanpham:danhsach-sanpham' %}" class="btn btn-default btn-ghost btn-icon-left waves-effect waves-dark btn-block"><i class="material-icons arrow_back"></i> Tiếp tục mua hàng</a>        
             <a href="{% url 'giohang:thanhtoan' %}" class="btn btn-primary btn-block waves-effect waves-light space-top-none" id="btn-thanhtoan">Thanh toán</a>
             {% endif %}            
             </aside>

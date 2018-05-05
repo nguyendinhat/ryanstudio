@@ -1,5 +1,6 @@
 {% load static %}
 {% url 'giohang:home' as giohang_url %}
+{% url 'taikhoan:home' as taikhoan_url %}
 <header class="navbar navbar-sticky blog-header">
     <!-- Site Logo -->
     <a href="/" class="site-logo visible-desktop">
@@ -17,14 +18,107 @@
                 <a href="/">Home</a>                
             </li>
             <li>
-                <a href="/sanpham/">Shop</a>            
+                <a href="/sanpham/">Tất cả</a>            
             </li>
-            <li><a href="#">Blog</a></li>
-            <li>
-                <a href="#">Gallery</a>
+            <li class="menu-item-has-children">
+                <a href="#">Bàn</a>
+                <ul class="sub-menu">
+                    <li><a href="#">Bàn nước</a></li>
+                    <li><a href="#">Bàn ăn</a></li>
+                    <li><a href="#">Bàn trưng bày</a></li>
+                    <li><a href="#">Bàn làm việc</a></li>
+                    <li><a href="#">Bàn trang điểm</a></li>
+                    <li><a href="#">Bàn đầu giường</a></li>
+                    <li><a href="#">Bàn trẻ em</a></li>
+                    <li><a href="#">Bàn xếp</a></li>
+                    <li><a href="#">Bàn ngoài trời</a></li>
+                </ul>
             </li>
-            <li>
-                <a href="#">Multilevel</a>            
+            <li class="menu-item-has-children">
+                <a href="#">Ghế</a>
+                <ul class="sub-menu">
+                    <li><a href="#">Ghế sofa</a></li>
+                    <li><a href="#">Ghế bành</a></li>
+                    <li><a href="#">Ghế đôn</a></li>
+                    <li><a href="#">Ghế ăn</a></li>
+                    <li><a href="#">Ghế văn phòng</a></li>
+                    <li><a href="#">Ghế trẻ em</a></li>
+                    <li><a href="#">Ghế xếp</a></li>
+                    <li><a href="#">Ghế ngoài trời</a></li>
+                </ul>
+            </li>
+            <li class="menu-item-has-children">
+                <a href="#">tủ kệ</a>
+                <ul class="sub-menu">
+                    <li><a href="#">Tủ tivi</a></li>
+                    <li><a href="#">Tủ ly</a></li>
+                    <li><a href="#">Tủ quần áo</a></li>
+                    <li><a href="#">Tủ phòng tắm</a></li>
+                    <li><a href="#">Kệ sách</a></li>
+                    <li><a href="#">Kệ trưng bày<a></li>
+                    <li><a href="#">Kệ giày</a></li>                    
+                </ul>
+            </li>
+            <li class="menu-item-has-children">
+                <a href="#">Giường</a>
+                <ul class="sub-menu">
+                    <li><a href="#">Giường đơn</a></li>
+                    <li><a href="#">Giường đôi</a></li>
+                    <li><a href="#">Giường trẻ em</a></li>                  
+                </ul>
+            </li>
+            <li class="menu-item-has-children">
+                <a href="#">Đèn</a>
+                <ul class="sub-menu">
+                    <li><a href="#">Đèn trần</a></li>
+                    <li><a href="#">Đèn tường</a></li>
+                    <li><a href="#">Đèn bàn</a></li>
+                    <li><a href="#">Đèn sàn</a></li>                 
+                    <li><a href="#">Đèn ngoài trời</a></li>
+                </ul>
+            </li>
+            <li class="menu-item-has-children">
+                <a href="#">Phụ kiện</a>
+                <ul class="sub-menu">
+                    <li class="submenu-item-has-children">
+                        <a href="#">Trên tường</a>
+                        <ul class="sub-menu">
+                            <li><a href="#">Rèm cửa</a></li>
+                            <li><a href="#">Tranh</a></li>
+                            <li><a href="#">Khung treo tường</a></li>
+                            <li><a href="#">Đồng hồ treo tường</a></li>                            
+                            <li><a href="#">Gường</a></li>
+                            <li><a href="#"></a>Móc áo</li>                            
+                        </ul>
+                    </li>
+                    <li class="submenu-item-has-children">
+                        <a href="#">Trên bàn</a>
+                        <ul class="sub-menu">
+                            <li><a href="#">khăn bàn</a></li>
+                            <li><a href="#">Chậu & lọ</a></li>
+                            <li><a href="#">Khung ảnh để bàn</a></li>
+                            <li><a href="#">Đồng hồ để bàn</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu-item-has-children">
+                        <a href="#">Trên giường</a>
+                        <ul class="sub-menu">                            
+                            <li><a href="#">Chăng</a></li>
+                            <li><a href="#">Ga</a></li>                            
+                            <li><a href="#">Gối</a></li>
+                            <li><a href="#">Nệm</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu-item-has-children">
+                        <a href="#">Dưới sàn</a>
+                        <ul class="sub-menu">                            
+                            <li><a href="#">Giỏ</a></li>
+                            <li><a href="#">Rương</a></li>                            
+                            <li><a href="#">Thảm</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Phụ kiện khác</a></li>
+                </ul>
             </li>
             <li class="menu-item-has-children">
                 <a href="#">Pages</a>
@@ -49,7 +143,7 @@
                 <div class="cart-dropdown account-thumb">
                     <div class="cart-item text-center item-sm">
                         <div class="column">
-                            <a href="">Tài khoản</a>
+                            <a href="{{ taikhoan_url }}">Tài khoản</a>
                         </div>                        
                     </div>
                     <div class="cart-subtotal text-center item-sm">

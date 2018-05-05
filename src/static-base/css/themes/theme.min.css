@@ -347,7 +347,6 @@ a.link-title:hover {
 }
 
 img {
-    vertical-align: middle;
     display: block;
     max-width: 100%;
     height: auto
@@ -359,28 +358,28 @@ svg {
 
 .text-navy {
     color: #1ab394;
-  }
-  .text-primary {
+}
+.text-primary {
     color: inherit;
-  }
-  .text-success {
+}
+.text-success {
     color: #1c84c6;
-  }
-  .text-info {
+}
+.text-info {
     color: #23c6c8;
-  }
-  .text-warning {
+}
+.text-warning {
     color: #f8ac59;
-  }
-  .text-danger {
+}
+.text-danger {
     color: #ed5565;
-  }
-  .text-muted {
+}
+.text-muted {
     color: #888888;
-  }
-  .text-white {
+}
+.text-white {
     color: #ffffff;
-  }
+}
 
 .img-rounded {
     border-radius: 6px
@@ -932,16 +931,26 @@ ul ul,ul ol,ol ul,ol ol {
     list-style: none;
 }
 
-.list-normal>li {
+.list-normal > li {
     position: relative;
     padding-left: 25px;
     margin-bottom: 9px
 }
 
-.list-normal>li>input{
+.list-normal > li > input, .list-normal > li > span > input{
     position: absolute;
     left: 0px;
     top:0px;
+}
+
+.list-normal > li > span {
+    position: relative;
+    padding-right: 25px;
+    margin-bottom: 9px;
+}
+
+.list-normal > li > span .iradio_flat-green {
+    right: 10px;
 }
 
 .list-inline {
@@ -4606,7 +4615,7 @@ input[type="submit"].btn-block,input[type="reset"].btn-block,input[type="button"
     margin-bottom: 17px;
 }
 
-.shopping-cart .item-inactive > a > img, .shopping-cart .item-inactive > div {
+.shopping-cart .item-inactive > a > img, .shopping-cart .item-inactive > div > h3, .shopping-cart .item-inactive > div > div > h4 {
     -webkit-filter: opacity(30%);
     filter: opacity(30%); 
 }
@@ -6485,133 +6494,6 @@ img.mfp-img {
     margin-right: 0
 }
 
-.panel {
-    margin-bottom: 20px;
-    background-color: transparent;
-    border: none;
-    border-radius: 0;
-    border-color: #ddd;
-    border: none
-}
-
-.panel>.panel-heading {
-    color: #333;
-    background-color: transparent;
-    border-color: #ddd
-}
-
-.panel>.panel-heading+.panel-collapse>.panel-body {
-    border-top-color: #ddd
-}
-
-.panel>.panel-heading .badge {
-    color: transparent;
-    background-color: #333
-}
-
-.panel>.panel-footer+.panel-collapse>.panel-body {
-    border-bottom-color: #ddd
-}
-
-.panel-body {
-    padding: 0 20px 20px 0
-}
-
-.panel-body:before,.panel-body:after {
-    content: " ";
-    display: table
-}
-
-.panel-body:after {
-    clear: both
-}
-
-.panel-heading {
-    border-bottom: none;
-    border-radius: 0
-}
-
-.panel-heading .panel-title {
-    display: block;
-    font-size: 18px;
-    font-weight: normal;
-    padding: 0 0 18px 0;
-    margin: 0;
-    border-radius: 0
-}
-
-.panel-heading>a {
-    position: relative;
-    color: #606060;
-    text-decoration: none;
-    -webkit-transition: color 0.3s;
-    -o-transition: color 0.3s;
-    transition: color 0.3s
-}
-
-.panel-heading>a:after {
-    display: inline-block;
-    vertical-align: middle;
-    font-family: "Material Icons";
-    font-size: 22px;
-    content: "\e5c7";
-    margin-top: -2px;
-    -webkit-transform: rotate(0);
-    -moz-transform: rotate(0);
-    -ms-transform: rotate(0);
-    -o-transform: rotate(0);
-    transform: rotate(0);
-    -webkit-transition: all 0.35s;
-    -o-transition: all 0.35s;
-    transition: all 0.35s
-}
-
-.panel-heading .panel-title.collapsed {
-    color: #999
-}
-
-.panel-heading .panel-title.collapsed:hover {
-    color: #606060;
-    background-color: transparent
-}
-
-.panel-heading .panel-title.collapsed:after {
-    -webkit-transform: rotate(180deg);
-    -moz-transform: rotate(180deg);
-    -ms-transform: rotate(180deg);
-    -o-transform: rotate(180deg);
-    transform: rotate(180deg)
-}
-
-.panel-group {
-    margin-bottom: 16px
-}
-
-.panel-group .panel {
-    margin-bottom: 0;
-    border-radius: 0
-}
-
-.panel-group .panel+.panel {
-    margin-top: 10px
-}
-
-.panel-group .panel-heading {
-    border-bottom: 0
-}
-
-.panel-group .panel-heading+.panel-collapse>.panel-body,.panel-group .panel-heading+.panel-collapse>.list-group {
-    border-top: none
-}
-
-.panel-group .panel-footer {
-    border-top: 0
-}
-
-.panel-group .panel-footer+.panel-collapse .panel-body {
-    border-bottom: none
-}
-
 .collapse {
     display: none
 }
@@ -6967,4 +6849,13 @@ img.mfp-img {
 .toolbar-title .checkout-r {
     position: absolute;
     right: 0;
+}
+
+.content-account {
+    padding: 0 165px;
+}
+@media (max-width: 768px) {
+    .content-account {
+        padding: 0;
+    }
 }

@@ -24,9 +24,6 @@ GH_TRANGTHAI_CHOICES = (
 
 
 class GioHangManager(models.Manager):
-    # def get_queryset(self):
-    #     return self.get_queryset().active()
-
     def new_or_get(self, request):
         id_giohang = request.session.get("id_giohang", None)
         id_khach = request.session.get("id_khach", None)
@@ -130,7 +127,8 @@ class GioHang(models.Model):
         total = 0
         items = GioHangSanPham.objects.get_spgh(giohang=self)
         for item in items:
-            total += item.thanhtien
+            if item.active == True:
+                total += item.thanhtien
         self.tong_thanhtien = total
         self.save()
 
@@ -163,6 +161,13 @@ class GioHang(models.Model):
             if item.active == False:
                 return True
         return False
+    
+    def check_khongdusoluong(self):
+        for item in GioHangSanPham.objects.get_spgh(self):
+            sp = SanPham.objects.get_by_id(item.sanpham.id_sanpham)
+            if item.soluong > sp.soluong and item.active == True:
+                return True
+        return False
 
 def giohang_receiver(sender, instance, *args, **kwargs):
     instance.tong_cong = instance.tong_thanhtien + instance.phigiaohang - instance.giamgia
@@ -189,7 +194,7 @@ class GioHangSanPhamManager(models.Manager):
         return self.get_queryset().filter(giohang=giohang, sanpham=sanpham)
 
     def get_spgh(self, giohang):
-       return self.get_queryset().filter(giohang=giohang)
+        return self.get_queryset().filter(giohang=giohang)
 
 class GioHangSanPham(models.Model):
     giohang     = models.ForeignKey(GioHang, db_column='id_giohang')

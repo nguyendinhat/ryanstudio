@@ -478,24 +478,4 @@
     </div><!-- /.blog-main -->
 {% endblock content %}
 {% block javascript %}
-    <script>
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-            var target = $(e.target).attr("href"); // activated tab
-            if (target=='#newcomers') {
-                $("#tab-1").addClass("active");
-                $("#tab-2").removeClass("active");
-                $("#tab-3").removeClass("active");
-            }
-            if (target=='#toprated') {
-                $("#tab-1").removeClass("active");
-                $("#tab-2").addClass("active");
-                $("#tab-3").removeClass("active");
-            }
-            if (target=='#onsale') {        
-                $("#tab-1").removeClass("active");
-                $("#tab-2").removeClass("active");
-                $("#tab-3").addClass("active");
-            }
-        });
-    </script>
 {% endblock javascript %}

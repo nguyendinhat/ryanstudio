@@ -23,7 +23,8 @@ urlpatterns = [
     url(r'^sanpham/', include("sanpham.urls", namespace='sanpham')),
     url(r'^timkiem/', include("timkiem.urls", namespace='search')),
     url(r'^giohang/', include("giohang.urls", namespace='giohang')),
-    url(r'^api/giohang/$', giohang_sanpham_view, name='api-giohang'), 
+    url(r'^api/giohang/$', giohang_sanpham_view, name='api-giohang'),
+    url(r'^taikhoan/', include("taikhoan.urls", namespace='taikhoan')),
 ]
 
 if settings.DEBUG:

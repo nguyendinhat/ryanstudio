@@ -23,7 +23,7 @@ def giohang_sanpham_view(request):
             "soluong": GioHangSanPham.objects().filter(giohang=giohang_obj, sanpham=item).soluong,
             "thanhtien": GioHangSanPham.objects().filter(giohang=giohang_obj, sanpham=item).thanhtien,
         } for item in giohang_obj.sanpham.all()
-    ]    
+    ] 
     giohang_data = {
         "sanpham": sanpham, 
         "phigiaohang": giohang_obj.phigiaohang,
@@ -32,16 +32,10 @@ def giohang_sanpham_view(request):
     }
     return JsonResponse(giohang_data)
 
-def new(self, taikhoan=None):
-    taikhoan_obj = None
-    if taikhoan is not None:
-        if taikhoan.is_authenticated():
-            taikhoan_obj = taikhoan
-
-    return GioHang.objects.create(taikhoan=taikhoan_obj, status='created')
 
 def giohang_view(request):
     giohang_obj = GioHang.objects.new_or_get(request)
+    giohang_obj.update_tong_thanhtien()
     request.session['giohang_items_count'] = giohang_obj.sanpham.count() or 0
     ghsp = GioHangSanPham.objects.get_spgh(giohang=giohang_obj)    
     for spgh in ghsp:
@@ -68,18 +62,21 @@ def giohang_capnhat(request):
             ghsp.delete()
             added = False
         else:
-            ghsp = GioHangSanPham(giohang=giohang_obj,sanpham=sanpham_obj)
-            ghsp.save()
-            added = True 
+            ghsp = GioHangSanPham(giohang=giohang_obj,sanpham=sanpham_obj, active=True)
+            ghsp.save()            
+            added = True
         if request.is_ajax():
             json_data = {
                 "added": added,
                 "remove": not added,
                 "hethang": giohang_obj.check_hethang(),
+                "khongdusoluong": giohang_obj.check_khongdusoluong(),
                 "giohangItemsCount": giohang_obj.sanpham.count() or 0
             }
-        request.session['giohang_items_count'] = giohang_obj.sanpham.count() or 0
-        return JsonResponse(json_data, status=200)
+            request.session['giohang_items_count'] = giohang_obj.sanpham.count() or 0
+            return JsonResponse(json_data, status=200)
+        # return HttpResponse({"message": "success"},status=203)
+        
     if id_sanpham is not None and soluong is not None:       
         try:
             sanpham_obj = SanPham.objects.get(id_sanpham=id_sanpham)
@@ -89,7 +86,15 @@ def giohang_capnhat(request):
         if sanpham_obj in giohang_obj.sanpham.all() and int(soluong) <= sanpham_obj.soluong:
             ghsp = GioHangSanPham.objects.get(giohang=giohang_obj,sanpham=sanpham_obj)
             ghsp.capnhat_soluong(int(soluong))
-            return HttpResponse({"message": "success"},status=201)
+            if request.is_ajax():
+                json_data = {
+                    "hethang": giohang_obj.check_hethang(),
+                    "khongdusoluong": giohang_obj.check_khongdusoluong(),
+                    "giohangItemsCount": giohang_obj.sanpham.count() or 0
+                }
+            request.session['giohang_items_count'] = giohang_obj.sanpham.count() or 0
+            return JsonResponse(json_data, status=200)
+            # return HttpResponse({"message": "success"},status=201)
         else:
             return HttpResponse({"message": "error"}, status_code=401)        
     return redirect("giohang:home")
@@ -118,22 +123,24 @@ def thanhtoan_view(request):
     # print(tong_trongluong)
     request.session['giohang_items_count'] = giohang_obj.sanpham.count() or 0
     if giohang_obj.sanpham.count() == 0 or giohang_obj.check_hethang():
-        return redirect("giohang:home")
+        return redirect("giohang:update")
     elif giohang_obj.email is None:
         return redirect("giohang:authentication")
     if request.method == "POST":
-        for spgh in ghsp:
-            sp = SanPham.objects.get_by_id(spgh.sanpham.id_sanpham)
-            if spgh.soluong > sp.soluong:
+        if giohang_obj.check_khongdusoluong():
                 error: "limitover"
-                return JsonResponse(error, status=204)
+                return JsonResponse(error, status=504)
         if all(i is not None for i in [hoten,sdt,diachi, tinh_thanh, quan_huyen, xa_phuong, loai_thanhtoan, ma_tinhthanh]):
+            if giohang_obj.check_hethang():
+                error = "có sản phẩm hết hàng"
+                return JsonResponse(error, status=504)
+
             giohang_obj.full_name       = hoten
             giohang_obj.sdt             = sdt
             giohang_obj.diachi          = diachi
             giohang_obj.tinh_thanh      = tinh_thanh
             giohang_obj.quan_huyen      = quan_huyen
-            giohang_obj.xa_phuong        = xa_phuong
+            giohang_obj.xa_phuong       = xa_phuong
             giohang_obj.loai_thanhtoan  = loai_thanhtoan
             giohang_obj.phigiaohang     = get_shipping_fee(ma_tinhthanh,tong_trongluong)
             
@@ -142,18 +149,18 @@ def thanhtoan_view(request):
                 giohang_obj.hoten_the   = hoten_the
                 giohang_obj.ngayhethan  = ngayhethan
                 giohang_obj.ccv         = ccv
-            
-            if giohang_obj.check_done():  
-                giohang_obj.save()          
+                       
+            if giohang_obj.check_done():
                 for spgh in ghsp:
                     sp = SanPham.objects.get_by_id(spgh.sanpham.id_sanpham)
                     sp.soluong = sp.soluong - spgh.soluong
                     sp.save()
                 giohang_obj.refresh_status()
+                request.session['id_khach'] = None
                 del request.session['id_giohang']
                 request.session['giohang_items_count'] = 0
+                giohang_obj.save()
                 return HttpResponse({"message": "success"},status=202)
-
     context = {
         "giohang": giohang_obj,
         "ghsp": ghsp,
