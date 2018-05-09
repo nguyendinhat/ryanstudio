@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %} 
+<!-- Container -->
+<section class="container">
+    <div class="row padding-top had-cart">  
+        <!-- Cart -->
+        <div class="col-md-10 offset-md-1">
+            <h1 class="space-top-half">Chi tiết đơn hàng <span class="text-uppercase">#{{ giohang.id_giohang }}</span></h1>
+            <hr>
+            <p class="float-left">Ngày đặt: {{ giohang.ngaydat|date:"d/m/Y H:i:s" }}</p> 
+            <p class="text-right">Tổng cộng: {{ giohang.tong_cong|intcomma }} ₫</p>
+            <hr>
+        </div>
+        <div class="col-md-10 offset-md-1">
+            <p class="text-sm text-gray co-the-mua">Những sản phẩm trong đơn hàng của bạn</p>
+            <div class="shopping-cart">
+            <!-- Item -->
+            {% for spgh in ghsp %}
+                    {% include "giohang/item_order.html" with sanpham=spgh.sanpham ghsp=ghsp%}
+            {% endfor %}
+            <!-- .item -->
+            </div><!-- .shopping-cart -->        
+        </div><!-- .col-sm-8 -->
+        <div class="col-md-10 offset-md-1">
+            <div class="row">
+                <div class="col-md-6" >
+                    <div style="border-right:2px solid rgb(237, 237, 237); padding-right: 10px">
+                            <h2>Địa chỉ giao hàng</h2>
+                            <h3 class="float-left">Họ tên:</h3><p class="text-right">{{ giohang.full_name }}</p>
+                            <h3 class="float-left">SĐT:</h3><p class="text-right">{{ giohang.sdt }}</p>
+                            <h3 class="float-left">Địa chỉ:</h3><p class="text-right">{{ giohang.diachi }}, {{ giohang.xa_phuong }}, {{ giohang.quan_huyen }}, {{ giohang.tinh_thanh }}</p>
+                    </div>                    
+                </div>
+                <div class="col-md-6">
+                    <h2>Thông tin thanh toán</h2>
+                    <h3 class="float-left">Tổng thành tiền:</h3><p class="text-right">{{ giohang.tong_thanhtien|intcomma }} ₫</p>
+                    <h3 class="float-left">Phí vận chuyển:</h3><p class="text-right">{{ giohang.phigiaohang|intcomma }} ₫</p>
+                    <h3 class="float-left">Giảm giá:</h3><p class="text-right">{{ giohang.giamgia|intcomma }} ₫</p>
+                    <h3 class="float-left">Tổng cộng:</h3><p class="text-right">{{ giohang.tong_cong|intcomma }} ₫</p>
+                    <h3 class="float-left">Phương thức thanh toán:</h3><p class="text-right">{{ giohang.loai_thanhtoan }}</p>
+            </div>
+        </div>
+    </div><!-- .row -->
+</section><!-- .container -->
+{% endblock content %}
+
+{% block javascript %}
+
+{% endblock javascript %}

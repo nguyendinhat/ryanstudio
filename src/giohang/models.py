@@ -1,9 +1,13 @@
 from decimal import Decimal
 
 from django.conf import settings
+from django.core.urlresolvers import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db import models
 from django.db.models.signals import pre_save, post_save, post_delete, m2m_changed
+from django.utils import timezone
+
+from ryanstudio.utils import unique_id_giohang_generator
 
 from taikhoan.models import Khach, ThanhVien
 from sanpham.models import SanPham
@@ -24,9 +28,6 @@ GH_TRANGTHAI_CHOICES = (
 
 
 class GioHangManager(models.Manager):
-    # def get_queryset(self):
-    #     return self.get_queryset().active()
-
     def new_or_get(self, request):
         id_giohang = request.session.get("id_giohang", None)
         id_khach = request.session.get("id_khach", None)
@@ -55,7 +56,7 @@ class GioHangManager(models.Manager):
                 giohang_moi.delete()            
             request.session['id_giohang'] = giohang_obj.id_giohang
             return giohang_obj
-         # có giỏ hàng request
+        # có giỏ hàng request
         if GioHang.objects.filter(id_giohang=id_giohang,status="created").count()==1:
             qs = GioHang.objects.filter(id_giohang=id_giohang,status="created")
             giohang_obj = qs.first()
@@ -85,28 +86,30 @@ class GioHangManager(models.Manager):
                 
 
 class GioHang(models.Model):
-    id_giohang              = models.AutoField(auto_created=True, primary_key=True, serialize=False)
+    id_giohang              = models.CharField(max_length=10, primary_key=True)
+    # id_giohang              = models.AutoField(auto_created=True, primary_key=True, serialize=False)
     taikhoan                = models.ForeignKey(Taikhoan, db_column='id_taikhoan', blank=True, null=True)
     email                   = models.EmailField(blank=True, null=True)
     sanpham                 = models.ManyToManyField(SanPham, through='GioHangSanPham')
     full_name               = models.CharField(max_length=50)    
     sdt_regex               = RegexValidator(regex=r'^\d{10,11}$', message="Số điện thoại không hợp lệ")
-    sdt                     = models.CharField(validators=[sdt_regex], max_length=11, blank=True)
+    sdt                     = models.CharField(validators=[sdt_regex], max_length=11)
     diachi                  = models.CharField(max_length=255)
     tinh_thanh              = models.CharField(max_length=50)
     quan_huyen              = models.CharField(max_length=50)
     xa_phuong               = models.CharField(max_length=50)
-    phigiaohang             = models.PositiveIntegerField(default=0)
+    phigiaohang             = models.PositiveIntegerField(default=0) 
     giamgia                 = models.PositiveIntegerField(default=0)
     tong_thanhtien          = models.PositiveIntegerField(default=0)
     tong_cong               = models.PositiveIntegerField(default=0)
     loai_thanhtoan          = models.CharField(max_length=6, choices=GH_PPTT_CHOICES, blank=True, null=True)
-    so_the                  = models.CharField(max_length=16, null=True, blank=True)
+    so_the                  = models.CharField(max_length=19, null=True, blank=True)
     hoten_the               = models.CharField(max_length=50, blank=True, null=True)
     ngayhethan              = models.CharField(max_length=9, blank=True, null=True)
-    cvv                     = models.CharField(max_length=3, blank=True, null=True)    
+    ccv                     = models.CharField(max_length=3, blank=True, null=True)    
     status                  = models.CharField(max_length=8, choices=GH_TRANGTHAI_CHOICES, default='created')
     active                  = models.BooleanField(default=True)
+    ngaydat                 = models.DateTimeField(blank=True, null=True)
     timestamp               = models.DateTimeField(auto_now_add=True)
     capnhat                 = models.DateTimeField(auto_now=True)
     
@@ -114,24 +117,21 @@ class GioHang(models.Model):
 
     class Meta:
         db_table = 'giohang'
+        ordering = ['-timestamp', '-capnhat']
 
     def __str__(self):
         return str(self.id_giohang)
 
-    def get_diachi(self):
-        return "{diachi}, {xa_phuong}, {quan_huyen}, {tinh_thanh}".format(
-                diachi          = self.diachi,
-                xa_phuong       = self.xa_phuong,
-                quan_huyen      = self.quan_huyen,
-                tinh_thanh      = self.tinh_thanh,
-        )
+    def get_absolute_url(self):
+        return reverse("donhang-chitiet", kwargs={'id_giohang': self.id_giohang})
 
     def update_tong_thanhtien(self):
         total = 0
         items = GioHangSanPham.objects.get_spgh(giohang=self)
         for item in items:
-            total += item.thanhtien
-        self.tong_thanhtien = total + self.phigiaohang - self.giamgia
+            if item.active == True:
+                total += item.thanhtien
+        self.tong_thanhtien = total
         self.save()
 
     def check_done(self):       
@@ -142,7 +142,7 @@ class GioHang(models.Model):
         if self.loai_thanhtoan == "cod":
             thanhtoan = True
         elif self.loai_thanhtoan == "credit":
-            if all(i is not None for i in [self.so_the, self.hoten_the, self.ngayhethan, self.cvv]):
+            if all(i is not None for i in [self.so_the, self.hoten_the, self.ngayhethan, self.ccv]):
                 thanhtoan = True        
         if diachi and thanhtoan and self.tong_thanhtien > 0:
             return True
@@ -152,6 +152,7 @@ class GioHang(models.Model):
         if self.status!='paid':
             if self.check_done():
                 self.status = "paid"
+                self.ngaydat = timezone.now()
                 self.save()
             else:
                 self.status = "created"
@@ -163,6 +164,19 @@ class GioHang(models.Model):
             if item.active == False:
                 return True
         return False
+    
+    def check_khongdusoluong(self):
+        for item in GioHangSanPham.objects.get_spgh(self):
+            sp = SanPham.objects.get_by_id(item.sanpham.id_sanpham)
+            if item.soluong > sp.soluong and item.active == True:
+                return True
+        return False
+
+def pre_save_tao_id_giohang(sender, instance, *args, **kwargs):
+    if not instance.id_giohang:
+        instance.id_giohang = unique_id_giohang_generator(instance)
+
+pre_save.connect(pre_save_tao_id_giohang, sender=GioHang)
 
 def giohang_receiver(sender, instance, *args, **kwargs):
     instance.tong_cong = instance.tong_thanhtien + instance.phigiaohang - instance.giamgia
@@ -189,7 +203,7 @@ class GioHangSanPhamManager(models.Manager):
         return self.get_queryset().filter(giohang=giohang, sanpham=sanpham)
 
     def get_spgh(self, giohang):
-       return self.get_queryset().filter(giohang=giohang)
+        return self.get_queryset().filter(giohang=giohang)
 
 class GioHangSanPham(models.Model):
     giohang     = models.ForeignKey(GioHang, db_column='id_giohang')

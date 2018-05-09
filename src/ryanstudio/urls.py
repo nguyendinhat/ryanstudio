@@ -10,7 +10,7 @@ from django.contrib import admin
 from .views import home_view
 from taikhoan.views import LoginView, RegisterView, GuestRegisterView
 from sanpham.views import SanPhamDanhMucView
-from giohang.views import giohang_sanpham_view
+from giohang.views import giohang_sanpham_view, donhang_view, chitiet_donhang_view
 
 urlpatterns = [
     url(r'^$', home_view, name='home'),
@@ -23,7 +23,11 @@ urlpatterns = [
     url(r'^sanpham/', include("sanpham.urls", namespace='sanpham')),
     url(r'^timkiem/', include("timkiem.urls", namespace='search')),
     url(r'^giohang/', include("giohang.urls", namespace='giohang')),
-    url(r'^api/giohang/$', giohang_sanpham_view, name='api-giohang'), 
+    url(r'^api/giohang/$', giohang_sanpham_view, name='api-giohang'),
+    url(r'^taikhoan/', include("taikhoan.urls", namespace='taikhoan')),
+    url(r'^donhang/$', donhang_view, name='donhang-list'),
+    url(r'^donhang/(?P<id_giohang>[0-9A-Za-z]+)/$', chitiet_donhang_view, name='donhang-chitiet'),
+    
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="wrapper-content fw-section padding-top-3x">    
+    <div class="row">
+        <div id="form-guest" class="col-md-4 offset-md-4 animated fadeInUp">
+            <h1> Nhập Email</h1>
+            <form method='POST' action='/donhang/' class="mt-5"> {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next_url2 }}">
+                <div class="wrap-input100 validate-input" data-validate="Email này có phải là của bạn">
+                    <input type="email" name="email" class="input100" required="" id="email" placeholder="example@domain.com">
+                    <span class="focus-input100 material-icons"></span>
+                </div>
+                <button type="submit" class='btn btn-sm btn-primary btn-block waves-effect waves-light'>Xem đơn hàng</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block javascript %}
+{% endblock javascript %}

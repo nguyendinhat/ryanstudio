@@ -15,10 +15,6 @@ def get_filename_ext(filename):
     return name,ext
 
 def get_last_month_data(today):
-    '''
-        Simple method to get the datetime objects for the 
-        start and end of last month. 
-    '''
     this_month_start = datetime.datetime(today.year, today.month, 1)
     last_month_end = this_month_start - datetime.timedelta(days=1)
     last_month_start = datetime.datetime(last_month_end.year, last_month_end.month, 1)
@@ -60,9 +56,6 @@ def random_string_generator(size=10, chars=string.ascii_lowercase + string.digit
 
 
 def unique_key_generator(instance):
-    """
-    This is for a Django project with an key field
-    """
     size = random.randint(30, 45)
     key = random_string_generator(size=size)
 
@@ -73,24 +66,17 @@ def unique_key_generator(instance):
     return key
 
 
-def unique_order_id_generator(instance):
-    """
-    This is for a Django project with an order_id field
-    """
-    order_new_id = random_string_generator()
+def unique_id_giohang_generator(instance):
+    id_giohang = random_string_generator()
 
     Klass = instance.__class__
-    qs_exists = Klass.objects.filter(order_id=order_new_id).exists()
+    qs_exists = Klass.objects.filter(id_giohang=id_giohang).exists()
     if qs_exists:
         return unique_slug_generator(instance)
-    return order_new_id
+    return id_giohang
 
 
 def unique_slug_generator(instance, new_slug=None):
-    """
-    This is for a Django project and it assumes your instance 
-    has a model with a slug field and a title character (char) field.
-    """
     if new_slug is not None:
         slug = new_slug
     else:

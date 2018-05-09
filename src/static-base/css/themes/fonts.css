@@ -1,0 +1,29 @@
+
+.font-bungee-outline {
+	font-family: 'Bungee Outline', cursive;
+}
+.font-bungee-shade {
+	font-family: 'Bungee Shade', cursive;
+}
+
+.font-sanserif-0 {
+font-family: 'Roboto', sans-serif;
+}
+.font-sanserif-1 {
+font-family: "Segoe UI", sans-serif;
+}
+.font-sanserif-2 {
+	font-family: 'Montserrat', sans-serif;
+}
+
+@font-face {
+	font-family: Material Icons;
+	font-weight: bold;
+	font-style: normal;
+	font-weight: 400;
+	src: url('/static/fonts/MaterialIcons/MaterialIcons-Regular.woff');
+}
+@font-face {
+	font-family: 'Glyphicons Halflings';
+	src: url('/static/fonts/glyphicons/glyphicons-halflings-regular.woff');
+}

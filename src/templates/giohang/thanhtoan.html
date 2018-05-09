@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/themes/wizard.css' %}">
     <!-- card -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/themes/giohang.thanhtoan.card.css' %}"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'css/vendor/sweetalert.css' %}"> 
 {% endblock base_head %}
 {% block content %}
 <!-- Container -->
@@ -13,32 +14,32 @@
     <div class="row padding-top had-cart">  
         <div class="col-lg-8 padding-bottom-2x">
             <div class="middle-box text-center animated animated fadeIn">
-                <form id="msform" class="m-t" role="form" method="POST">
+                <form id="dathang-form" class="m-t" role="form" method="POST">
                     <ul id="progressbar">
                         <li class="active">Thông tin<br> khách hàng</li>
                         <li>phương thức <br> Thanh toán</li>
-                        <li>Xác nhận <br> Đặt mua</li>
+                        <li>Xác nhận <br> Đặt hàng</li>
                     </ul>
                     <fieldset>
                         <h2 class="fs-title">Thông tin khách hàng</h2>
                         <h3 class="fs-subtitle">Những thông tin này cần phải chính xác <br> để đơn hàng sớm tới tay bạn hơn</h3>
                         <div class="wizard-content">
-                            <div class="wrap-input100 validate-input" data-validate="Họ và tên của bạn là gì">
+                            <div class="wrap-input100 validate-input" data-validate="Chúng ta sẽ gọi nhau bằng gì ?">
                                 <span class="label-input100">Họ tên</span>
-                                <input type="text" name="hoten" class="input100" placeholder="Ex: Nguyễn Thanh Bình" required="" id="hoten">
+                                <input type="text" name="hoten" class="input100" required="" id="hoten">
                                 <span class="focus-input100 material-icons"></span>
                             </div>
-                            <div class="wrap-input100 validate-input" data-validate="Số điện thoại này vô nghĩa ở Việt Nam">
+                            <div class="wrap-input100 validate-input" data-validate="Giữ liên lạc với nhau để khi nhớ nhau ta còn gọi">
                                 <span class="label-input100">Số điện thoại</span>
-                                <input type="text" name="sdt" class="input100" placeholder="Ex: 01234567890" onkeypress="return event.charCode >= 48 && event.charCode <= 57" required="" id="sdt">
+                                <input type="text" name="sdt" class="input100" maxlength="11" onkeypress="return event.charCode >= 48 && event.charCode <= 57" required="" id="sdt">
                                 <span class="focus-input100 material-icons"></span>
                             </div>
                             <div class="wrap-input100 validate-input" data-validate="Shipper sẽ không tìm thấy số nhà của bạn">
                                 <span class="label-input100">Địa chỉ</span>
-                                <input type="text" name="dichi" class="input100" placeholder="Ex: Hẻm 68 Bùi Thị Xuân" required="" id="diachi">
+                                <input type="text" name="dichi" class="input100" required="" id="diachi">
                                 <span class="focus-input100"></span>
                             </div>
-                            <div class="wrap-input100 input100-select validate-input" data-validate="Thành phố sẽ buồn vì bạn đã quên nó">
+                            <div class="wrap-input100 input100-select validate-input" data-validate="Thành phố buồn vì bạn đã quên nó">
                                 <span class="label-input100">
                                         Tỉnh/Thành phố</span>
                                 <select class="selection-2" name="tinhthanh" id="tinhthanh">
@@ -46,10 +47,11 @@
                                 </select>
                                 <span class="focus-input100"></span>
                             </div>
-                            <div class="wrap-input100 input100-select validate-input" data-validate="Quận Huyện mình tên là gì ấy nhỉ">
+                            <div class="wrap-input100 input100-select validate-input" data-validate="Quận/Huyện mình tên là gì ấy nhỉ">
                                 <span class="label-input100">
                                         Quận/Huyện</span>
                                 <select class="selection-2" name="quanhuyen" id="quanhuyen">
+                                    <option rel="-1"></option>
                                 </select>
                                 <span class="focus-input100"></span>
                             </div>
@@ -57,6 +59,7 @@
                                 <span class="label-input100">
                                         Xã/Phường</span>
                                 <select class="selection-2" name="xaphuong" id="xaphuong">
+                                    <option rel="-1"></option>
                                 </select>
                                 <span class="focus-input100"></span>
                             </div>
@@ -98,22 +101,22 @@
                             <div class="col-md-5 offset-md-2 col-sm-12">
                                 <div class="wrap-input100 validate-input" data-validate="Nếu bạn không có thẻ có thể chọn COD">
                                     <span class="label-input100">Số tài khoản</span>
-                                    <input type="text" name="sothe" class="input100 inputsm number" maxlength="19" onkeypress='return event.charCode >= 48 && event.charCode <= 57' required="" id="sothe">
+                                    <input type="text" name="sothe" class="input100 inputsm number" maxlength="19" onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="sothe">
                                     <span class="focus-input100"></span>
                                 </div>
                                 <div class="wrap-input100 validate-input" data-validate="Hãy tìm tên của mình trên thẻ ấy">
                                     <span class="label-input100">Tên chủ thẻ</span>
-                                    <input type="text" name="hotenthe" class="input100 inputname" required="" id="hotenthe">
+                                    <input type="text" name="hotenthe" class="input100 inputname" id="hotenthe">
                                     <span class="focus-input100"></span>
                                 </div>
                                 <div class="wrap-input100 validate-input" data-validate="Hôm nay là thứ mấy. Chắc chắn không phải thứ 2">
                                     <span class="label-input100">Ngày hết hạn</span>
-                                    <input type="text" name="ngayhethan" class="input100 expire" placeholder="MM / YYYY" required="" id="ngayhethan">
+                                    <input type="text" name="ngayhethan" class="input100 expire" placeholder="MM / YYYY" id="ngayhethan">
                                     <span class="focus-input100"></span>
                                 </div>
                                 <div class="wrap-input100 validate-input" data-validate="Đừng quá lo lắng, chúng tôi luôn thực hiện theo các cam kết bảo mật">
                                     <span class="label-input100">Mã bảo mật</span>
-                                    <input type="text" name="ccv" class="input100 ccv" maxlength="3" onkeypress='return event.charCode >= 48 && event.charCode <= 57' required="" id="ccv">
+                                    <input type="text" name="ccv" class="input100 ccv" maxlength="3" onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="ccv">
                                     <span class="focus-input100"></span>
                                 </div>
                             </div>
@@ -129,9 +132,9 @@
                                     <p>Họ tên: <span class="pre-hoten beforecheckout-l"></span></p>
                                     <p>Số điện thoại: <span class="pre-sdt beforecheckout-l"></span></p>
                                     <p>Phương thức thanh toán: <span class="pre-pttt beforecheckout-l"></span></p>
-                                    <p>Địa chỉ: <span class="pre-diachi beforecheckout-l"></span></p>  
-                                    
-                                    <div class="pre-pttt-chitiet"></div>                                                    
+                                    <p>Địa chỉ: <span class="pre-diachi beforecheckout-l"></span></p>
+                                    <p>Tổng cộng: <span class="beforecheckout-l tongcong"></span></p>
+                                    <div class="pre-pttt-chitiet"></div>
                                 </div>
                         </div>                                                
                         <button type="button" class="btn btn-default btn-ghost btn-icon-left waves-effect waves-dark previous" name="Previous"><i class="material-icons navigate_before"> </i> Trở lại</button>
@@ -144,8 +147,12 @@
         <div class="col-lg-3 offset-lg-1 padding-bottom-2x animated fadeIn">
             <div>
                 <aside>
-                    <h3 class="toolbar-title">Tạm tính:</h3>
-                    <h1 id="amount" class="amount" data-tongcong="{{ giohang.tong_cong }}"></h1>
+                    <input type="hidden" name="tongtrongluong" value="{{ tong_trongluong }}" id="tongtrongluong">                     
+                    <h3 class="toolbar-title">Tạm tính: <span id="tamtinh" class="checkout-r tamtinh" data-tamtinh="{{ giohang.tong_thanhtien }}"></span></h3>              
+                    <h3 class="toolbar-title">Phí giao hàng: <span id="shipping-fee" class="checkout-r shipping-fee" data-phigiaohang="{{ giohang.phigiaohang }}"></span></h3>
+                    <h3 class="toolbar-title">Giảm giá: <span id="giamgia" class="checkout-r giamgia" data-giamgia="{{ giohang.giamgia }}">{{ giohang.giamgia }}</span></h3>
+                    <h3 class="toolbar-title">Tổng cộng: <span id="tongcong" class="checkout-r tongcong" data-tongcong="{{ giohang.tong_cong }}"></span></h3> 
+                    
                     <a href="{% url 'giohang:home' %}" class="btn btn-default btn-ghost btn-icon-left btn-block waves-effect waves-dark"><i class="material-icons arrow_back"></i> quay lại giỏ hàng</a>
                 </aside>
             </div>
@@ -154,8 +161,6 @@
                     {% include "giohang/item_sidebar.html" with sanpham=spgh.sanpham ghsp=ghsp%}
                 {% endif %}
             {% endfor %}
-                       
-            
         </div><!-- .col-md-3.col-sm-4 -->
     </div><!-- .row -->
 </section><!-- .container --> 
@@ -163,9 +168,10 @@
 {% endblock content %}
 {% block javascript %}
     <script src="{% static 'js/vendor/select2.min.js' %}"></script>
-    <script src="{% static 'js/themes/giohang.async.js' %}"></script>
-    <script src="{% static 'js/themes/wizard.js' %}"></script>
+    <script src="{% static 'js/vendor/sweetalert.min.js' %}"></script>
+    <script src="{% static 'js/themes/giohang.thanhtoan.phigiaohang.js' %}"></script>    
+    <script src="{% static 'js/themes/giohang.thanhtoan.handle.js' %}"></script>
     <script src="{% static 'js/themes/giohang.thanhtoan.location.js' %}"></script>
     <script src="{% static 'js/themes/giohang.thanhtoan.card.js' %}"></script>
-    <script src="{% static 'js/themes/giohang.thanhtoan.handle.js' %}"></script>
+    <script src="{% static 'js/themes/giohang.async.js' %}"></script>
 {% endblock javascript %}
