@@ -6,7 +6,8 @@
 function formatMoney(n) {	
 	return n.toFixed(0).replace(/./g, function(c, i, a) {
         return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "." + c : c;
-    })+" ₫";
+	})+" ₫";
+	// return n + " ₫";
 }
 
 var footerHeight = 0, footerTop = 0, $footer = $("#footer");
@@ -93,7 +94,6 @@ jQuery(document).ready(function($) {
 		});
 	}
 
-
 	// Animated Scroll to Top Button
 	//------------------------------------------------------------------------------
 	var $scrollTop = $('.scroll-to-top-btn');
@@ -171,16 +171,19 @@ jQuery(document).ready(function($) {
 			$("#tab-1").addClass("active");
 			$("#tab-2").removeClass("active");
 			$("#tab-3").removeClass("active");
+			positionFooter();
 		}
 		if (target=='#toprated'||target=='#status-order') {
 			$("#tab-1").removeClass("active");
 			$("#tab-2").addClass("active");
 			$("#tab-3").removeClass("active");
+			positionFooter();
 		}
 		if (target=='#onsale') {        
 			$("#tab-1").removeClass("active");
 			$("#tab-2").removeClass("active");
 			$("#tab-3").addClass("active");
+			positionFooter();
 		}
 	});
 	// Isotope Grid / Filters (Gallery)
@@ -564,44 +567,44 @@ jQuery(document).ready(function($) {
 					styles = $(this).data('styles');
 			$(this).height(mapHeight);
 			$(this).gmap3({
-          marker:{
-            address: address,
-            data: markerTitle,
-            options: {
-            	icon: marker
-            },
-            events: {
-              mouseover: function(marker, event, context){
-                var map = $(this).gmap3("get"),
-                  	infowindow = $(this).gmap3({get:{name:"infowindow"}});
-                if (infowindow){
-                  infowindow.open(map, marker);
-                  infowindow.setContent(context.data);
-                } else {
-                  $(this).gmap3({
-                    infowindow:{
-                      anchor:marker,
-                      options:{content: context.data}
-                    }
-                  });
-                }
-              },
-              mouseout: function(){
-                var infowindow = $(this).gmap3({get:{name:"infowindow"}});
-                if (infowindow){
-                  infowindow.close();
-                }
-              }
-            }
-          },
-          map:{
-            options:{
-              zoom: zoom,
-              disableDefaultUI: controls,
-              scrollwheel: scrollwheel,
-              styles: styles
-            }
-          }
+				marker:{
+				address: address,
+				data: markerTitle,
+				options: {
+					icon: marker
+				},
+				events: {
+					mouseover: function(marker, event, context){
+					var map = $(this).gmap3("get"),
+						infowindow = $(this).gmap3({get:{name:"infowindow"}});
+					if (infowindow){
+						infowindow.open(map, marker);
+						infowindow.setContent(context.data);
+					} else {
+						$(this).gmap3({
+						infowindow:{
+							anchor:marker,
+							options:{content: context.data}
+						}
+						});
+					}
+					},
+					mouseout: function(){
+					var infowindow = $(this).gmap3({get:{name:"infowindow"}});
+					if (infowindow){
+						infowindow.close();
+					}
+					}
+				}
+				},
+				map:{
+				options:{
+					zoom: zoom,
+					disableDefaultUI: controls,
+					scrollwheel: scrollwheel,
+					styles: styles
+				}
+				}
 			});
 		});
 	}
@@ -636,5 +639,3 @@ $(document).ready(function () {
 		
 	}
 });
-
-

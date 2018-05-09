@@ -1,3 +1,4 @@
+from django import template
 from django.conf import settings
 from django.core.serializers import serialize
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
@@ -46,7 +47,7 @@ def giohang_view(request):
         "ghsp": ghsp
     }
     return render(request, "giohang/home.html", context)
-   
+
 
 def giohang_capnhat(request):
     id_sanpham      = request.POST.get('id_sanpham', None) 
@@ -149,7 +150,7 @@ def thanhtoan_view(request):
                 giohang_obj.hoten_the   = hoten_the
                 giohang_obj.ngayhethan  = ngayhethan
                 giohang_obj.ccv         = ccv
-                       
+
             if giohang_obj.check_done():
                 for spgh in ghsp:
                     sp = SanPham.objects.get_by_id(spgh.sanpham.id_sanpham)
@@ -184,3 +185,29 @@ def thanhtoan_auth_view(request):
 
 def thanhtoan_thangcong_view(request):
     return render(request, "giohang/thanhtoan_xong.html", {})
+
+def donhang_view(request):
+    if request.method == 'POST':
+        email           = request.POST.get('email', None)
+        request.session['email_check_order'] = email
+        if email is not None:
+            order_list      = GioHang.objects.filter(email=email).exclude(status="created")
+            context = {
+                "taikhoan"      : request.user,
+                "order_list"    : order_list
+            }
+    else:
+        return render(request, "giohang/donhang_auth.html", {})    
+    return render(request, "giohang/donhang.html", context)
+
+def chitiet_donhang_view(request, id_giohang):
+    giohang_obj = GioHang.objects.get(id_giohang=id_giohang)
+    if request.session.get('email_check_order') != giohang_obj.email:
+        return redirect("donhang-list")
+    ghsp        = GioHangSanPham.objects.get_spgh(giohang=giohang_obj) 
+    context = {
+        "taikhoan"  : request.user,
+        "giohang"   : giohang_obj,
+        "ghsp"      : ghsp
+    }
+    return render(request, "giohang/donhang_chitiet.html", context)

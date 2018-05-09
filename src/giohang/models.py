@@ -1,9 +1,13 @@
 from decimal import Decimal
 
 from django.conf import settings
+from django.core.urlresolvers import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db import models
 from django.db.models.signals import pre_save, post_save, post_delete, m2m_changed
+from django.utils import timezone
+
+from ryanstudio.utils import unique_id_giohang_generator
 
 from taikhoan.models import Khach, ThanhVien
 from sanpham.models import SanPham
@@ -52,7 +56,7 @@ class GioHangManager(models.Manager):
                 giohang_moi.delete()            
             request.session['id_giohang'] = giohang_obj.id_giohang
             return giohang_obj
-         # có giỏ hàng request
+        # có giỏ hàng request
         if GioHang.objects.filter(id_giohang=id_giohang,status="created").count()==1:
             qs = GioHang.objects.filter(id_giohang=id_giohang,status="created")
             giohang_obj = qs.first()
@@ -82,7 +86,8 @@ class GioHangManager(models.Manager):
                 
 
 class GioHang(models.Model):
-    id_giohang              = models.AutoField(auto_created=True, primary_key=True, serialize=False)
+    id_giohang              = models.CharField(max_length=10, primary_key=True)
+    # id_giohang              = models.AutoField(auto_created=True, primary_key=True, serialize=False)
     taikhoan                = models.ForeignKey(Taikhoan, db_column='id_taikhoan', blank=True, null=True)
     email                   = models.EmailField(blank=True, null=True)
     sanpham                 = models.ManyToManyField(SanPham, through='GioHangSanPham')
@@ -104,6 +109,7 @@ class GioHang(models.Model):
     ccv                     = models.CharField(max_length=3, blank=True, null=True)    
     status                  = models.CharField(max_length=8, choices=GH_TRANGTHAI_CHOICES, default='created')
     active                  = models.BooleanField(default=True)
+    ngaydat                 = models.DateTimeField(blank=True, null=True)
     timestamp               = models.DateTimeField(auto_now_add=True)
     capnhat                 = models.DateTimeField(auto_now=True)
     
@@ -111,17 +117,13 @@ class GioHang(models.Model):
 
     class Meta:
         db_table = 'giohang'
+        ordering = ['-timestamp', '-capnhat']
 
     def __str__(self):
         return str(self.id_giohang)
 
-    def get_diachi(self):
-        return "{diachi}, {xa_phuong}, {quan_huyen}, {tinh_thanh}".format(
-                diachi          = self.diachi,
-                xa_phuong       = self.xa_phuong,
-                quan_huyen      = self.quan_huyen,
-                tinh_thanh      = self.tinh_thanh,
-        )
+    def get_absolute_url(self):
+        return reverse("donhang-chitiet", kwargs={'id_giohang': self.id_giohang})
 
     def update_tong_thanhtien(self):
         total = 0
@@ -150,6 +152,7 @@ class GioHang(models.Model):
         if self.status!='paid':
             if self.check_done():
                 self.status = "paid"
+                self.ngaydat = timezone.now()
                 self.save()
             else:
                 self.status = "created"
@@ -168,6 +171,12 @@ class GioHang(models.Model):
             if item.soluong > sp.soluong and item.active == True:
                 return True
         return False
+
+def pre_save_tao_id_giohang(sender, instance, *args, **kwargs):
+    if not instance.id_giohang:
+        instance.id_giohang = unique_id_giohang_generator(instance)
+
+pre_save.connect(pre_save_tao_id_giohang, sender=GioHang)
 
 def giohang_receiver(sender, instance, *args, **kwargs):
     instance.tong_cong = instance.tong_thanhtien + instance.phigiaohang - instance.giamgia

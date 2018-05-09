@@ -25,9 +25,14 @@ SECRET_KEY = 'ri8xg7nqgs(3b#t^oi2!m-whvru1b$=*rih9yuiykxstmun^tv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# USE_L10N = True
+# LANGUAGE_CODE = 'de'
+# USE_THOUSAND_SEPARATOR = True
+# DECIMAL_SEPARATOR = ','
+# THOUSAND_SEPARATOR = '.'
+# NUMBER_GROUPING = 3
+
 ALLOWED_HOSTS = ['ryanstudio.com']
-
-
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'nguyendinhatt@gmail.com' 
@@ -53,6 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     # database
     'django_mysql',
     # ssl

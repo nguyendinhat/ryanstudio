@@ -135,28 +135,25 @@
     <!-- Toolbar -->
     <div class="toolbar">
         <div class="inner">
-            <a href="#" class="mobile-menu-toggle"><i class="material-icons menu"></i></a>
+            <a href="#" class="mobile-menu-toggle"><i class="material-icons menu"></i></a>            
             {% if request.user.is_authenticated %}
-            <div class="account-btn main-navigation>">
-                <a href="#"><i class="material-icons person"></i></a>
-                
-                <div class="cart-dropdown account-thumb">
-                    <div class="cart-item text-center item-sm">
-                        <div class="column">
-                            <a href="{{ taikhoan_url }}">Tài khoản</a>
-                        </div>                        
-                    </div>
-                    <div class="cart-subtotal text-center item-sm">
-                        <div class="column">
-                            <a href="/logout">
-                                Đăng xuất
-                            </a>
-                        </div>                        
-                    </div>
-                </div>                
+            <div class="account-btn">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="material-icons person"></i></a>
+                <div class="dropdown-menu animate fadeIn">
+                    <a class="dropdown-item" href="{{ taikhoan_url }}">Tài khoản</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'logout' %}">Đăng xuất</a>
+                </div>
             </div>
             {% else %}
-            <a href="/login"><i class="material-icons person_outline"></i></a>
+            <div class="account-btn">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="material-icons person_outline"></i></a>
+                    <div class="dropdown-menu animate fadeIn">
+                        <a class="dropdown-item" href="{% url 'donhang-list' %}">Kiểm tra đơn hàng</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'login' %}">Đăng nhập</a>
+                    </div>
+                </div>
             {% endif %}
             <div class="cart-btn">
                 <a href="{{ giohang_url }}">
@@ -169,7 +166,7 @@
                         {% endif %}
                     </i>
                 </a>
-            </div><!-- .cart-btn -->
+            </div><!-- .cart-btn -->           
         </div><!-- .inner -->
     </div><!-- .toolbar -->
 </header>

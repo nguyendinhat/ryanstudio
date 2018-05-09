@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.core.validators import RegexValidator
+from ryanstudio.utils import unique_id_giohang_generator
 
 TV_GIOITINH_CHOICES = (
     ('male', 'Nam'),

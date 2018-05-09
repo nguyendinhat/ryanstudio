@@ -1,104 +1,120 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% load humanize %}
 {% block base_head %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/vendor/toastr.min.css' %}"> 
 <link rel="stylesheet" type="text/css" href="{% static 'css/vendor/plugin.css' %}"> 
-
+<link rel="stylesheet" href="{% static 'css/plugins/datatables/dataTables.bootstrap4.min.css' %}">
 {% endblock base_head %}
     
 
 {% block content %} 
-<section class="wrapper-content container">
-    <div class="content-account padding-top-3x">
-        <h1 class="mobile-center"><span class="text-semibold">{{ taikhoan.full_name }}</span></h1>
-        <ul class="nav nav-tabs text-center">
+<section class="wrapper-content ">
+    <div class="padding-bottom-3x">
+        <h1 class="mobile-center content-account text-center"><span class="text-semibold">{{ taikhoan.full_name }}</span></h1>
+        <ul class="nav nav-tabs text-center content-account sticky mx-auto">
             <li class="active" id="tab-1"><a href="#profile" data-toggle="tab">Thông tin cá nhân</a></li>
             <li id="tab-2"><a href="#status-order" data-toggle="tab">Tình trạng đơn hàng</a></li>
         </ul>
         <div class="tab-content tab-account">
             <div class="tab-pane transition in active fade scale" id="profile">                
-                <div class="padding-top">
-                    <form id="account-form" method="post">
-                        <div class="wrap-input100 validate-input">
+                <div class="padding-top content-account">
+                    <form id="account-form" method="post" class="row">
+                        <div class="wrap-input100 validate-input col-md-4 offset-md-4">
                             <span class="label-input100">Email</span>
                             <input type="text" name="email" class="input100" id="email" value="{{ taikhoan.email }}"  disabled>
                             <span class="focus-input100 material-icons"></span>
                         </div>
-                        <div class="wrap-input100 validate-input" data-validate="Chúng ta sẽ gọi nhau bằng gì ?">
+                        <div class="wrap-input100 validate-input col-md-4 offset-md-4" data-validate="Chúng ta sẽ gọi nhau bằng gì ?">
                             <span class="label-input100">Họ tên</span>
                             <input type="text" name="hoten" class="input100" required="" id="hoten" value="{{ taikhoan.full_name }}">
                             <span class="focus-input100 material-icons"></span>
                         </div>
-                        <div class="wrap-input100 validate-input" data-validate="Giữ liên lạc với nhau để khi nhớ nhau ta còn gọi">
+                        <div class="wrap-input100 validate-input col-md-4 offset-md-4" data-validate="Giữ liên lạc với nhau để khi nhớ nhau ta còn gọi">
                             <span class="label-input100">Số điện thoại</span>
                             <input type="text" name="sdt" class="input100" maxlength="11" onkeypress="return event.charCode >= 48 && event.charCode <= 57" required="" id="sdt" value="{{ taikhoan.sdt }}">
                             <span class="focus-input100 material-icons"></span>
                         </div>
-                        <div class="wrap-input100 validate-input" data-validate="Lịch không có ngày này bạn ơi! định dạng ngày phải là: d/m/Y">
+                        <div class="wrap-input100 validate-input col-md-4 offset-md-4" data-validate="Lịch không có ngày này bạn ơi! định dạng ngày phải là: d/m/Y">
                             <span class="label-input100">Ngày sinh</span>
                             <input type="text" name="ngaysinh" class="input100 dob" value="{{ taikhoan.ngaysinh|date:'d/m/Y' }}" id="ngaysinh">
                             <span class="focus-input100"></span>
                         </div>
-                        <label for="gioitinh" class="label-input100">Giới tính</label>
-                        <ul class="list-normal" id="gioitinh" data-gioitinh="{{ taikhoan.gioitinh }}">
-                            <li>
-                                <span><input type="radio" name="gioitinh" text="Nam" value="male">Nam</span>
-                                <span><input type="radio" name="gioitinh" text="Nữ" value="female">Nữ</span>   
-                                <span><input type="radio" name="gioitinh" text="Không xác định" value="undefined">Không xác định</span>                         
-                            </li>                            
-                        </ul>
-                        <button type="button" id="btn-account" class="btn btn-primary waves-effect waves-light">Lưu</button>
+                        <div class="col-md-4 offset-md-4">
+                            <label for="gioitinh" class="label-input100">Giới tính</label>
+                            <ul class="list-normal" id="gioitinh" data-gioitinh="{{ taikhoan.gioitinh }}">
+                                <li>
+                                    <span><input type="radio" name="gioitinh" text="Nam" value="male">Nam</span>
+                                    <span><input type="radio" name="gioitinh" text="Nữ" value="female">Nữ</span>   
+                                    <span><input type="radio" name="gioitinh" text="Không xác định" value="undefined">Không xác định</span>                         
+                                </li>                            
+                            </ul>
+                            <button type="button" id="btn-account" class="btn btn-block btn-primary waves-effect waves-light">Lưu</button>
+                        </div>
+                        
                     </form>
-                    <!-- 
-                        email           = models.EmailField(max_length=255,unique=True,)
-    full_name       = models.CharField(max_length=255, blank=True, null=True)
-    ngaysinh        = models.DateField(blank=True, null=True)
-    gioitinh        = models.CharField(max_length=9, default='undefined',
-                    -->
                 </div>
             </div>
             <div class="tab-pane fade scale" id="status-order">
-                <div class="table-responsive">
-                    <table>
-                    <thead>
-                        <tr>
-                        <th>Order #</th>
-                        <th>Date Purchased</th>
-                        <th>Status</th>
-                        <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                        <td><a href="#">31719DA0567</a></td>
-                        <td>December 06, 2016</td>
-                        <td><span class="text-warning">In Progress</span></td>
-                        <td>$1,350.00</td>
-                        </tr>
-                        <tr>
-                        <td><a href="#">22018770CV7</a></td>
-                        <td>November 11, 206</td>
-                        <td><span class="text-danger">Canceled</span></td>
-                        <td>$475.60</td>
-                        </tr>
-                        <tr>
-                        <td><a href="#">4B33FG45520</a></td>
-                        <td>September 23, 2016</td>
-                        <td><span class="text-success">Delivered</span></td>
-                        <td>$2,140.80</td>
-                        </tr>
-                    </tbody>
-                    </table>
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">   <h1 style="padding: 30px">Đơn hàng của tôi</h1></div>
+                        <div class="col-md-10 offset-md-1">
+                                <table id="order_list" class="table table-striped table-bordered" style="width:100%">                    
+                                    <thead>
+                                        <tr>
+                                            <th>Mã đơn hàng</th>
+                                            <th>Ngày đặt hàng</th>                                        
+                                            <th>Tổng thành tiền</th>
+                                            <th>Phí giao hàng</th>
+                                            <th>Giảm giá</th>
+                                            <th>Tổng cộng</th>
+                                            <th>PTTT</th>
+                                            <th>Trạng thái</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for order in order_list %}
+                                        <tr>
+                                            <td><a href="{{ order.get_absolute_url }}" class="text-uppercase link-title">{{ order.id_giohang }}</a></td>
+                                            <td>{{ order.timestamp|date:"d/m/Y H:i:s" }}</td>
+                                            <td>{{ order.tong_thanhtien|intcomma  }} ₫</td>
+                                            <td>{{ order.phigiaohang|intcomma  }} ₫</td>
+                                            <td>{{ order.giamgia|intcomma  }} ₫</td>
+                                            <td>{{ order.tong_cong|intcomma  }} ₫</td>
+                                            <td>{{ order.loai_thanhtoan }}</td>
+                                            <td><span class="label label-primary">{{ order.status }}</span></td>                                        
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Mã đơn hàng</th>
+                                            <th>Ngày đặt hàng</th>
+                                            <th>Tổng thành tiền</th>
+                                            <th>Phí giao hàng</th>
+                                            <th>Giảm giá</th>
+                                            <th>Tổng cộng</th>
+                                            <th>PTTT</th>                                        
+                                            <th>Trạng thái</th>                                        
+                                        </tr>
+                                    </tfoot>
+                            </table>
+                        </div>
                 </div>
             </div>
         </div>
-    </div>
-    
+    </div>    
 </section>
 {% endblock content %}
 {% block javascript %}
+<script src="{% static 'js/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'js/plugins/datatables/dataTables.bootstrap4.min.js' %}"></script>
 <script src="{% static 'js/vendor/toastr.min.js' %}"></script>
 <script src="{% static 'js/vendor/toastr.custom.js' %}"></script>
 <script src="{% static 'js/themes/taikhoan.handle.js' %}"></script>
+<script>
+$(document).ready(function() {
+    $('#order_list').DataTable();
+} );
+</script>
 {% endblock javascript %}
